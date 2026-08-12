@@ -1,7 +1,7 @@
 {
   "method": "greedy",
   "objective": {
-    "metric": "negative_cross_entropy",
+    "metric": "exact_match",
     "direction": "maximize",
     "dataset_split": "B"
   },

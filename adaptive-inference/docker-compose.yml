@@ -1,0 +1,87 @@
+# =============================================================================
+# docker-compose.yml – adaptive-inference project
+#
+# Services:
+#   adaptive-inference   R1.x dev container (CPU-only PyTorch baseline)
+#
+# Usage examples:
+#   docker compose build
+#   docker compose run --rm adaptive-inference python tasks/test_generator.py
+#   docker compose run --rm adaptive-inference \
+#       python tasks/generate_data.py \
+#       --num_train 10000 --num_val 1000 --num_test 1000 --seed 42
+#
+# Future training service (R1.5+) can be added as a second service that
+# inherits from this image and adds CUDA / C++ runtime dependencies.
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # adaptive-inference – main development container
+  # ---------------------------------------------------------------------------
+  adaptive-inference:
+    build:
+      context: .          # adaptive-inference/ is the build context
+      dockerfile: Dockerfile
+
+    image: adaptive-inference:r1.0
+
+    # ── Bind mounts ───────────────────────────────────────────────────────────
+    # Data directories are mounted so generated files persist on the host and
+    # are never baked into the image layer.  Read-only mounts are not used here
+    # because generate_data.py must write to train_set/ and eval_set/.
+    volumes:
+      # Source code – live-reload edits without rebuilding the image
+      - .:/workspace
+
+      # Data outputs (explicitly listed so their intent is clear)
+      - ./tasks/train_set:/workspace/tasks/train_set
+      - ./tasks/eval_set:/workspace/tasks/eval_set
+
+      # Experiment artefacts
+      - ./checkpoints:/workspace/checkpoints
+      - ./results:/workspace/results
+
+    # ── Environment ───────────────────────────────────────────────────────────
+    environment:
+      PYTHONPATH: "/workspace"
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+
+    # ── Default invocation ─────────────────────────────────────────────────────
+    # Override on the command line:
+    #   docker compose run --rm adaptive-inference <command>
+    command: python tasks/test_generator.py
+
+    # ── Working directory ──────────────────────────────────────────────────────
+    # /workspace is the project root so commands like:
+    #   python tasks/test_generator.py
+    #   python tasks/generate_data.py --num_train 10000 …
+    # resolve correctly without path duplication.
+    working_dir: /workspace
+
+    # ── Resource limits (optional, safe defaults) ──────────────────────────────
+    # Remove or adjust if you run on a machine with less RAM.
+    # mem_limit: 4g
+
+  # ---------------------------------------------------------------------------
+  # training  (placeholder – uncomment and extend for R1.5+)
+  # ---------------------------------------------------------------------------
+  # training:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.training   # will add CUDA + C++ runtime
+  #   image: adaptive-inference-training:r1.5
+  #   volumes:
+  #     - .:/workspace
+  #     - ./checkpoints:/workspace/checkpoints
+  #     - ./results:/workspace/results
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: all
+  #             capabilities: [gpu]
+  #   command: python training/train.py --config experiments/r1_baseline.yaml

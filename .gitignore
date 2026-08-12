@@ -17,3 +17,23 @@ env/
 # OS files
 .DS_Store
 Thumbs.db
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# Keep Dockerfile, docker-compose.yml, and .dockerignore tracked.
+# Ignore Docker build cache artefacts that may appear locally.
+.docker/
+
+# ── Generated datasets & experiment artefacts ─────────────────────────────────
+# These directories are mounted as volumes at runtime and must not be committed.
+adaptive-inference/tasks/train_set/*.jsonl
+adaptive-inference/tasks/eval_set/*.jsonl
+adaptive-inference/checkpoints/*
+adaptive-inference/results/*
+# Keep the placeholder files so empty dirs are tracked in git
+!adaptive-inference/**/.gitkeep
+
+# ── Python / misc additions ───────────────────────────────────────────────────
+*.egg-info/
+dist/
+build/
+htmlcov/

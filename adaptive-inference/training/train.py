@@ -93,109 +93,212 @@ def collate_fn(batch: List[Dict[str, Any]], pad_id: int) -> Dict[str, Any]:
     }
 
 
+def _compute_backbone_params(
+    d_model: int,
+    n_layers: int,
+    vocab_size: int,
+    max_seq_len: int,
+    num_experts: int,
+    is_moe: bool,
+) -> int:
+    """
+    Analytically computes B: all always-active (non-sparse) parameters.
+
+    For MoE models the router is counted in B, because it executes for every
+    token — it is not sparse (§2 v0.7 decision: router ∈ B).  The router size
+    scales with N_total (d_model × num_experts per layer), so B differs across
+    M1–M5 and C1–C4, and d_ff is adjusted accordingly to keep A = 140M.
+
+    Components:
+      Embedding block : token_embed + pos_embed + ln_embed
+      Per layer       : ln1 + attention(q,k,v,out projections) + ln2
+                        [+ router if MoE]
+      Output block    : ln_out + lm_head (weight + bias)
+    """
+    # Embedding block
+    B = (
+        vocab_size * d_model           # token_embed  (Embedding)
+        + max_seq_len * d_model        # pos_embed    (Embedding)
+        + 2 * d_model                  # ln_embed     (weight + bias)
+    )
+
+    # Per-layer shared params
+    per_layer = (
+        2 * d_model                             # ln1 (weight + bias)
+        + 4 * (d_model * d_model + d_model)     # q,k,v,out Linear (weight + bias each)
+        + 2 * d_model                           # ln2 (weight + bias)
+    )
+    if is_moe:
+        per_layer += d_model * num_experts      # router Linear (bias=False)
+    B += n_layers * per_layer
+
+    # Output block
+    B += 2 * d_model                            # ln_out (weight + bias)
+    B += vocab_size * d_model + vocab_size      # lm_head (weight + bias)
+
+    return B
+
+
 def get_model_config(model_name: str) -> Dict[str, Any]:
     """
-    Returns exact hyperparameters matching the spec for L=5, D=1408.
-    Calculates d_ff dynamically to match the 140M active parameter budget exactly.
+    Returns architecture hyperparameters for model_name, with A = B + K·E = 140M.
+
+    §4 v0.7 definitions (frozen):
+      B  = backbone active params — all shared, always-active components:
+           embeddings + attention + layer norms + router (router ∈ B, §2 v0.7).
+           B varies with N_total because router size = d_model × N_total per layer.
+      E  = params of ONE expert across ALL n_layers MoE layers:
+           E = n_layers × params(FFNExpert_single_layer)
+      K  = top_k (number of experts activated per token)
+      A  = B + K·E  (target: exactly 140,000,000)
+
+    For Dense models (M0, Dense-A):
+      No router; K = 1; E = all FFN params across n_layers.
+
+    Note on exactness:
+      Integer d_ff may produce A slightly below 140M (typically < 0.1% off).
+      §2 v0.7: "exactamente construible" means the formula is correctly applied,
+      not that integer d_ff can always hit 140M to the last parameter.
+      M1–M5 / C1–C4 tolerance: < 0.1%.  Dense-A / M0 tolerance: ≤ 1%.
     """
-    configs = {
-        'M0': {'moe': False, 'num_experts': 1, 'top_k': 1},
-        'Dense-A': {'moe': False, 'num_experts': 1, 'top_k': 1},
-        'M1': {'moe': True, 'num_experts': 8, 'top_k': 2},
-        'M2': {'moe': True, 'num_experts': 32, 'top_k': 2},
-        'M3': {'moe': True, 'num_experts': 128, 'top_k': 4},
-        'M4': {'moe': True, 'num_experts': 512, 'top_k': 8},
-        'M5': {'moe': True, 'num_experts': 896, 'top_k': 8},
-        # EXP-C configs
-        'C1': {'moe': True, 'num_experts': 32, 'top_k': 2},
-        'C2': {'moe': True, 'num_experts': 128, 'top_k': 2},
-        'C3': {'moe': True, 'num_experts': 512, 'top_k': 2},
-        'C4': {'moe': True, 'num_experts': 896, 'top_k': 2},
+    CONFIGS: Dict[str, Dict[str, Any]] = {
+        # EXP-B / M-family  (§4 table)
+        'M0':      {'moe': False, 'num_experts': 1,   'top_k': 1},
+        'Dense-A': {'moe': False, 'num_experts': 1,   'top_k': 1},
+        'M1':      {'moe': True,  'num_experts': 8,   'top_k': 2},
+        'M2':      {'moe': True,  'num_experts': 32,  'top_k': 2},
+        'M3':      {'moe': True,  'num_experts': 128, 'top_k': 4},
+        'M4':      {'moe': True,  'num_experts': 512, 'top_k': 8},
+        'M5':      {'moe': True,  'num_experts': 896, 'top_k': 8},
+        # EXP-C (K=2 fixed, N_total varies — §4 EXP-C table)
+        'C1':      {'moe': True,  'num_experts': 32,  'top_k': 2},
+        'C2':      {'moe': True,  'num_experts': 128, 'top_k': 2},
+        'C3':      {'moe': True,  'num_experts': 512, 'top_k': 2},
+        'C4':      {'moe': True,  'num_experts': 896, 'top_k': 2},
     }
-    if model_name not in configs:
-        raise ValueError(f"Unknown model name: {model_name}. Choose from: {list(configs.keys())}")
-        
-    cfg = configs[model_name]
-    
-    # Calculate d_ff dynamically to hit exactly 140M active parameters
-    d_model = 1408
-    n_layers = 5
+    if model_name not in CONFIGS:
+        raise ValueError(
+            f"Unknown model: '{model_name}'. Valid names: {sorted(CONFIGS)}"
+        )
+
+    cfg = CONFIGS[model_name].copy()
+
+    # Fixed architectural constants shared across all configs
+    d_model     = 1408
+    n_layers    = 5
     max_seq_len = 512
-    vocab_size = 100
-    target_active = 140e6
-    
-    embed = vocab_size * d_model
-    pos_embed = max_seq_len * d_model
-    ln_embed = 2 * d_model
-    att = 4 * d_model * d_model + 4 * d_model
-    ln1 = 2 * d_model
-    ln2 = 2 * d_model
-    ln_out = 2 * d_model
-    head = vocab_size * d_model
-    
-    B_fixed = embed + pos_embed + ln_embed + n_layers * (att + ln1 + ln2) + ln_out + head
-    
-    if cfg['moe']:
-        router = n_layers * d_model * cfg['num_experts']
-        numerator = target_active - B_fixed - router - n_layers * cfg['top_k'] * d_model
-        denominator = n_layers * cfg['top_k'] * (2 * d_model + 1)
-        d_ff = int(numerator / denominator)
-    else:
-        numerator = target_active - B_fixed - n_layers * d_model
-        denominator = n_layers * (2 * d_model + 1)
-        d_ff = int(numerator / denominator)
-        
-    cfg['d_ff'] = d_ff
+    vocab_size  = 100       # CharTokenizer: 5 special + 95 printable ASCII
+    TARGET_A    = 140_000_000
+
+    is_moe      = cfg['moe']
+    num_experts = cfg['num_experts']
+    K           = cfg['top_k']
+
+    # --- Step 1: compute B analytically (router included for MoE) ---
+    B = _compute_backbone_params(
+        d_model, n_layers, vocab_size, max_seq_len, num_experts, is_moe
+    )
+
+    # --- Step 2: solve for d_ff so that A = B + K*E = TARGET_A ---
+    # FFNExpert per layer: in_proj + out_proj (both with bias)
+    #   params_per_layer = 2*d_model*d_ff + d_ff + d_model
+    #                    = (2*d_model + 1)*d_ff + d_model
+    # E = n_layers * params_per_layer
+    # A = B + K * E
+    numerator   = TARGET_A - B - K * n_layers * d_model
+    denominator = K * n_layers * (2 * d_model + 1)
+    d_ff        = round(numerator / denominator)
+
+    # --- Step 3: compute actual A with integer d_ff ---
+    E_per_layer = 2 * d_model * d_ff + d_ff + d_model   # FFNExpert (in+out with bias)
+    E           = n_layers * E_per_layer                 # one expert, ALL layers
+    A           = B + K * E
+
+    cfg.update({
+        'd_ff':       d_ff,
+        # §4 contract fields — must be reported in every result table:
+        'B':          B,
+        'K':          K,
+        'E':          E,
+        'A':          A,
+        # Metadata for verification / reporting
+        'd_model':    d_model,
+        'n_layers':   n_layers,
+        'vocab_size': vocab_size,
+        'max_seq_len': max_seq_len,
+        'TARGET_A':   TARGET_A,
+    })
     return cfg
 
 
-def count_parameters(model: nn.Module) -> Tuple[int, int]:
+def count_active_params(model: nn.Module) -> Dict[str, int]:
     """
-    Returns (total_params, active_params).
+    Computes B, E, K, A from the instantiated model, verifying A = B + K·E.
+
+    §4 v0.7 definitions:
+      B = backbone params (everything except expert FFN weights)
+          Router is counted in B because it is always active (§2 v0.7).
+      E = params of ONE expert across ALL MoE layers
+          = n_moe_layers × params(single FFNExpert)
+      K = top_k (number of experts activated per token)
+      A = B + K·E  (active params per token)
+
+    For Dense models (M0, Dense-A):
+      K = 1; E = all FFN weights across n_layers; A = B + E = total.
+
+    Returns:
+      dict with keys: 'total', 'B', 'K', 'E', 'A'
     """
-    total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    
-    # Calculate active parameters (backbone + active experts)
-    # We find this by tracing the module structure
-    backbone_params = 0
-    expert_params = 0
-    active_expert_params = 0
-    
-    for name, module in model.named_modules():
-        # Check if FFNExpert
-        if module.__class__.__name__ == 'FFNExpert':
-            # Check if it is nested inside an MoELayer or directly in TransformerBlock
-            # We can count its parameters
-            p_count = sum(p.numel() for p in module.parameters() if p.requires_grad)
-            expert_params += p_count
-        elif module.__class__.__name__ == 'MoELayer':
-            # This is the MoE block
-            pass
-            
-    # Attention, Embeddings, Head, LayerNorms
-    backbone_params = total_params - expert_params
-    
-    # Active FFN expert params = top_k * single expert size * L
-    # We can infer single expert size from the module
-    if model.moe:
-        # Get first block's MoELayer to inspect properties
-        moe_layer = None
+    is_moe = model.moe
+    total  = sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+    if is_moe:
+        # Experts are sparse; router stays in B (always active).
+        single_expert_size: Optional[int] = None
+        all_expert_params  = 0
+        n_moe_layers       = 0
+        K: Optional[int]   = None
+
         for block in model.blocks:
             if block.moe:
-                moe_layer = block.ffn
-                break
-        if moe_layer is not None:
-            # Single expert size
-            single_expert_size = sum(p.numel() for p in moe_layer.experts[0].parameters() if p.requires_grad)
-            active_expert_params = len(model.blocks) * moe_layer.top_k * single_expert_size
-            
-            # Router parameters are part of the active backbone (router is active for every token)
-            # Ensure router is counted in backbone parameters
+                moe = block.ffn
+                n_moe_layers += 1
+                K    = moe.top_k
+                e_sz = sum(
+                    p.numel() for p in moe.experts[0].parameters() if p.requires_grad
+                )
+                if single_expert_size is None:
+                    single_expert_size = e_sz
+                else:
+                    assert e_sz == single_expert_size, (
+                        f"Expert size mismatch across layers: {e_sz} != {single_expert_size}"
+                    )
+                all_expert_params += moe.num_experts * e_sz
+
+        # B = total minus all expert weights (router already included in remainder)
+        B = total - all_expert_params
+        # E = one expert, all MoE layers
+        E = n_moe_layers * single_expert_size
+        A = B + K * E
+
     else:
-        active_expert_params = expert_params # Dense model: all experts active
-        
-    active_params = backbone_params + active_expert_params
-    return total_params, active_params
+        # Dense: one FFN per layer, always active.
+        ffn_total = sum(
+            p.numel()
+            for block in model.blocks
+            for p in block.ffn.parameters()
+            if p.requires_grad
+        )
+        B = total - ffn_total
+        E = ffn_total   # all layers
+        K = 1
+        A = B + K * E   # == total
+
+        assert A == total, (
+            f"Dense model: A={A:,} != total={total:,}. Parameter accounting error."
+        )
+
+    return {'total': total, 'B': B, 'K': K, 'E': E, 'A': A}
 
 
 @torch.no_grad()
@@ -406,10 +509,15 @@ def main():
         top_k=config['top_k']
     ).to(device)
 
-    # Verify Parameter Counts
-    total_p, active_p = count_parameters(model)
-    print(f"Total Parameters: {total_p/1e6:.6f}M")
-    print(f"Active Parameters per Token: {active_p/1e6:.6f}M")
+    # Verify Parameter Counts — §4 contract: A = B + K·E
+    counts = count_active_params(model)
+    delta_rel = abs(counts['A'] - 140_000_000) / 140_000_000
+    print(f"Total Parameters:  {counts['total']/1e6:.4f}M")
+    print(f"Active params  A:  {counts['A']/1e6:.4f}M  "
+          f"(B={counts['B']/1e6:.4f}M  "
+          f"K={counts['K']}  "
+          f"E={counts['E']/1e6:.4f}M)  "
+          f"ΔA_rel={delta_rel*100:.4f}%")
 
     # Optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)

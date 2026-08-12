@@ -1,0 +1,56 @@
+# =============================================================================
+# .dockerignore – adaptive-inference
+#
+# Keeps the build context small and avoids leaking host-specific artefacts
+# into the image.  The bind mounts in docker-compose.yml handle runtime data.
+# =============================================================================
+
+# ── Python byte-code & caches ─────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# ── Virtual environments ───────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+.env
+ENV/
+
+# ── Generated data (large; always mounted as volumes at runtime) ───────────────
+tasks/train_set/
+tasks/eval_set/
+checkpoints/
+results/
+
+# ── Jupyter / IPython ─────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── IDEs and OS artefacts ─────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Git ───────────────────────────────────────────────────────────────────────
+.git/
+.gitignore
+
+# ── Docker itself (avoid recursive copy) ──────────────────────────────────────
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# ── Docs (not needed inside the image) ────────────────────────────────────────
+docs/
+*.md

@@ -1,0 +1,52 @@
+{
+  "metrics": {
+    "ESP": {
+      "value": 0.00843416109810391,
+      "ci95": [
+        -0.005721789766885618,
+        0.022384093492120342
+      ],
+      "status": "statistically_indistinguishable_from_zero"
+    },
+    "denominator": {
+      "delta_search_random": -0.0023502552870854343,
+      "ci95": [
+        -0.01167228578748631,
+        0.0070836248183330725
+      ],
+      "status": "unstable_denominator"
+    },
+    "RSE": {
+      "value": null,
+      "ci95": null,
+      "denominator_status": "unstable_denominator",
+      "ratio_status": "non_estimable"
+    }
+  },
+  "bootstrap_diagnostics": {
+    "total_replicates": 10000,
+    "invalid_denominator_replicates": 6798,
+    "invalid_ratio_replicates": 6798,
+    "invalid_fraction": 0.6798,
+    "posthoc_exclusion": false
+  },
+  "experiment": {
+    "contract_version": "v0.12-final",
+    "phase": "R1.3",
+    "domain": "Coding",
+    "description": "R1.3 Sparse Selector Evaluation pre-registration"
+  },
+  "candidate_space": {
+    "expert_pool_size": 16,
+    "subset_size_k": 4,
+    "feasibility_constraints": {
+      "type": "exact_k_experts"
+    },
+    "sampling_distribution": "uniform_over_feasible_subsets"
+  },
+  "random_reference": {
+    "N": 10,
+    "frozen": true,
+    "resampled_in_bootstrap": false
+  }
+}

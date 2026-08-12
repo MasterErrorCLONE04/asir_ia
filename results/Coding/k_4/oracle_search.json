@@ -1,0 +1,33 @@
+{
+  "method": "greedy",
+  "objective": {
+    "metric": "negative_cross_entropy",
+    "direction": "maximize",
+    "dataset_split": "B"
+  },
+  "budget": {
+    "unit": "candidate_subset_evaluations",
+    "value": 58
+  },
+  "search_determinism": {
+    "deterministic": true,
+    "seeds": [
+      42,
+      43,
+      44
+    ]
+  },
+  "tie_breaking": {
+    "policy": "deterministic",
+    "rule": "lexicographic_expert_id"
+  },
+  "dataset_split": "B",
+  "k": 4,
+  "selected_subset": [
+    1,
+    10,
+    13,
+    15
+  ],
+  "implementation_version": "v0.12-final-ref1"
+}

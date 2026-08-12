@@ -1,0 +1,16 @@
+{
+  "method": "exact_hash",
+  "implementation_version": "hashlib_sha256_v1",
+  "threshold": null,
+  "seed": 42,
+  "total_examples": 600,
+  "total_groups": 600,
+  "split_counts": {
+    "A_examples": 240,
+    "B_examples": 180,
+    "C_examples": 180,
+    "A_groups": 240,
+    "B_groups": 180,
+    "C_groups": 180
+  }
+}

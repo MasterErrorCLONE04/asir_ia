@@ -35,11 +35,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from analysis.config_schema import load_and_validate_config
 from analysis.partitioning import partition_dataset_abc
 from analysis.oracle_search import run_oracle_search
-from analysis.random_reference import sample_random_reference_subsets
-from analysis.evaluator import compute_paired_bootstrap_metrics
 from analysis.artifacts import save_artifact_snapshot
-from analysis.model_adapter import MoEModelAdapter, HAS_TORCH as ADAPTER_HAS_TORCH
+from analysis.model_adapter import MoEModelAdapter, load_moe_model_from_checkpoint, HAS_TORCH as ADAPTER_HAS_TORCH
 from analysis.moe_profiler import profile_selector_on_split_a
+
 
 if HAS_TORCH:
     from training.models.transformer import MoETransformer
@@ -47,7 +46,6 @@ if HAS_TORCH:
     from tasks.tokenizer import CharTokenizer
 
 from tasks.generator import SyntheticTaskGenerator
-
 
 
 def load_real_or_synthetic_dataset(data_path: Optional[str] = None, n_synthetic: int = 600) -> List[Dict[str, Any]]:
@@ -84,6 +82,7 @@ def main():
     parser = argparse.ArgumentParser(description="Executes R1.3 evaluation pipeline (v0.12-final).")
     parser.add_argument("--config", type=str, required=True, help="Path to pre-registered YAML/JSON config.")
     parser.add_argument("--model", type=str, default="M1", help="Model architecture (M1, M2, etc.).")
+    parser.add_argument("--checkpoint", type=str, default=None, help="Optional path to trained model.pt checkpoint.")
     parser.add_argument("--data_path", type=str, default=None, help="Optional path to dataset jsonl.")
     parser.add_argument("--output_dir", type=str, default=None, help="Optional output results directory.")
     parser.add_argument("--cpu_smoke_test", action="store_true", help="Run quick CPU smoke test.")
@@ -104,27 +103,34 @@ def main():
 
     if HAS_TORCH and not args.dry_run:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"Initializing MoETransformer model {args.model} on device {device}...")
         model_cfg = get_model_config(args.model)
         pool_size = model_cfg["num_experts"] if model_cfg["moe"] else pool_size
         tokenizer = CharTokenizer()
-        model = MoETransformer(
-            vocab_size=tokenizer.vocab_size,
-            d_model=1408,
-            n_layers=5,
-            num_heads=8,
-            d_ff=512,
-            max_seq_len=256,
-            moe=model_cfg["moe"],
-            num_experts=pool_size,
-            top_k=model_cfg["top_k"]
-        ).to(device)
+
+        if args.checkpoint and os.path.exists(args.checkpoint):
+            print(f"Loading MoETransformer model {args.model} from checkpoint {args.checkpoint} on device {device}...")
+            model = load_moe_model_from_checkpoint(args.checkpoint, model_name=args.model, device=device)
+        else:
+            print(f"Initializing MoETransformer model {args.model} (untrained) on device {device}...")
+            model = MoETransformer(
+                vocab_size=tokenizer.vocab_size,
+                d_model=1408,
+                n_layers=5,
+                num_heads=8,
+                d_ff=512,
+                max_seq_len=256,
+                moe=model_cfg["moe"],
+                num_experts=pool_size,
+                top_k=model_cfg["top_k"]
+            ).to(device)
+
         adapter = MoEModelAdapter(model, tokenizer, device)
         use_pytorch = True
     else:
         print("Running with synthetic/mock evaluation mode...")
         use_pytorch = False
         rng = np.random.default_rng(42)
+(42)
 
     if args.output_dir:
         out_dir = args.output_dir

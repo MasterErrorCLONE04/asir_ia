@@ -19,9 +19,10 @@ if HAS_TORCH:
     from training.models.transformer import MoETransformer
     from tasks.tokenizer import CharTokenizer
     from tasks.generator import SyntheticTaskGenerator
-    from analysis.model_adapter import MoEModelAdapter, create_expert_mask
+    from analysis.model_adapter import MoEModelAdapter, create_expert_mask, load_moe_model_from_checkpoint
     from analysis.moe_profiler import profile_selector_on_split_a
     from analysis.evaluator import compute_paired_bootstrap_metrics
+
 
 
 @unittest.skipUnless(HAS_TORCH, "PyTorch is not installed in current environment")

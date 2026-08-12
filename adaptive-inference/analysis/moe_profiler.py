@@ -56,15 +56,14 @@ def profile_selector_on_split_a(
     with torch.no_grad():
         for sample in a_samples:
             prompt_str = sample["input"]
-            target_str = sample["target"]
 
+            # Prompt-only profiling: NO target_ids to prevent future data leakage
             prompt_ids = tokenizer.encode(prompt_str, add_bos=True, add_eos=False)
             sep_ids = [tokenizer.sep_id]
-            target_ids = tokenizer.encode(target_str, add_bos=False, add_eos=True)
 
-            input_ids = torch.tensor([prompt_ids + sep_ids + target_ids], dtype=torch.long, device=dev)
+            input_ids = torch.tensor([prompt_ids + sep_ids], dtype=torch.long, device=dev)
 
-            # Forward pass without mask
+            # Forward pass without mask on prompt sequence
             _, all_router_logits = model(input_ids, mask=None)
 
             for layer_logits in all_router_logits:
@@ -78,6 +77,7 @@ def profile_selector_on_split_a(
                     topk_indices.view(-1),
                     torch.ones(topk_indices.numel(), device=dev)
                 )
+
 
     # Pick top-k experts by accumulated counts
     topk_vals, topk_experts = torch.topk(accumulated_counts, k)

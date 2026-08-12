@@ -21,7 +21,44 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if HAS_TORCH:
     from training.models.transformer import MoETransformer
     from tasks.tokenizer import CharTokenizer
-    from training.train import generate_autoregressive
+    from training.train import generate_autoregressive, get_model_config
+
+
+def load_moe_model_from_checkpoint(
+    checkpoint_path: str,
+    model_name: str = "M1",
+    device: Optional[Any] = None
+) -> Any:
+    """
+    Loads MoETransformer model architecture and weights from checkpoint file.
+    """
+    if not HAS_TORCH:
+        raise ImportError("PyTorch is required to load model checkpoints.")
+
+    dev = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model_cfg = get_model_config(model_name)
+    tokenizer = CharTokenizer()
+
+    model = MoETransformer(
+        vocab_size=tokenizer.vocab_size,
+        d_model=1408,
+        n_layers=5,
+        num_heads=8,
+        d_ff=512,
+        max_seq_len=256,
+        moe=model_cfg["moe"],
+        num_experts=model_cfg["num_experts"],
+        top_k=model_cfg["top_k"]
+    ).to(dev)
+
+    if os.path.exists(checkpoint_path):
+        state_dict = torch.load(checkpoint_path, map_location=dev)
+        # Handle state_dict key nesting if saved under 'model_state_dict'
+        if isinstance(state_dict, dict) and "model_state_dict" in state_dict:
+            state_dict = state_dict["model_state_dict"]
+        model.load_state_dict(state_dict)
+
+    return model
 
 
 def create_expert_mask(subset_S: Tuple[int, ...], num_experts: int, device: Any) -> Any:
@@ -36,6 +73,7 @@ def create_expert_mask(subset_S: Tuple[int, ...], num_experts: int, device: Any)
         if 0 <= exp_idx < num_experts:
             mask[0, exp_idx] = 1.0
     return mask
+
 
 
 class MoEModelAdapter:

@@ -1,0 +1,11 @@
+{
+  "metrics": {
+    "ESP": {
+      "value": 0.0,
+      "status": "statistically_indistinguishable_from_zero"
+    }
+  },
+  "bootstrap_diagnostics": {
+    "invalid_fraction": 0.0
+  }
+}

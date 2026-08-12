@@ -1,0 +1,11 @@
+{
+  "metrics": {
+    "ESP": {
+      "value": -0.1,
+      "status": "ok"
+    }
+  },
+  "bootstrap_diagnostics": {
+    "invalid_fraction": 0.0
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "sampling_distribution": "uniform_over_feasible_subsets",
+  "N_random": 5,
+  "random_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "subsets_frozen_for_evaluation": true,
+  "resample_random_subsets_in_bootstrap": false,
+  "frozen_subsets": [
+    [
+      0,
+      2,
+      11,
+      15
+    ],
+    [
+      2,
+      4,
+      9,
+      10
+    ],
+    [
+      3,
+      6,
+      8,
+      9
+    ],
+    [
+      6,
+      10,
+      13,
+      15
+    ],
+    [
+      2,
+      4,
+      8,
+      11
+    ]
+  ]
+}

@@ -1,0 +1,86 @@
+# R1.3 Pre-registration Configuration (Specification v0.12-final)
+
+experiment:
+  contract_version: "v0.12-final"
+  phase: "R1.3"
+  domain: "Coding"
+  description: "R1.3 Sparse Selector Evaluation pre-registration"
+
+quality_metric:
+  name: "negative_cross_entropy"
+  source_metric: "cross_entropy"
+  transform: "negate"
+  direction: "maximize"
+  unit: "nats"
+
+candidate_space:
+  expert_pool_size: 16
+  subset_size_k: 4
+  feasibility_constraints:
+    type: "exact_k_experts"
+  sampling_distribution: "uniform_over_feasible_subsets"
+
+oracle_search:
+  method: "greedy"
+  objective:
+    metric: "negative_cross_entropy"
+    direction: "maximize"
+    dataset_split: "B"
+  budget:
+    unit: "candidate_subset_evaluations"
+    value: 500
+  beam_width: null
+  greedy_iterations: 4
+  stopping_criterion: "max_budget_reached"
+  search_determinism:
+    deterministic: true
+    seeds: [42, 43, 44]
+  tie_breaking:
+    policy: "deterministic"
+    rule: "lexicographic_expert_id"
+  dataset_split: "B"
+  k: 4
+  implementation_version: "v0.12-final-ref1"
+
+random_reference:
+  sampling_distribution: "uniform_over_feasible_subsets"
+  N_random: 10
+  random_seeds: [101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
+  subsets_frozen_for_evaluation: true
+  resample_random_subsets_in_bootstrap: false
+
+grouping:
+  method: "exact_hash"
+  implementation_version: "hashlib_sha256_v1"
+  threshold: null
+  seed: 42
+
+uncertainty:
+  method: "paired_example_bootstrap_conditional_on_frozen_random_reference"
+  resample_unit: "example"
+  preserve_paired_evaluation: true
+  hierarchy:
+    level_1: "evaluation_examples_C"
+    level_2: "frozen_random_reference"
+    random_subset_resampling: false
+  random_subset_variability:
+    subsets_frozen: true
+    resample_new_subsets: false
+    resample_frozen_subset_indices: false
+  confidence_level: 0.95
+  interval_type: "percentile"
+  bootstrap_replicates: 10000
+
+ratio_uncertainty:
+  estimator: "paired_bootstrap"
+  interval: "percentile"
+  confidence_level: 0.95
+  invalid_ratio_replicates:
+    denominator_nonpositive_rule: "mark_ratio_non_estimable"
+  posthoc_exclusion: false
+  diagnostics_reporting:
+    required_fields:
+      - "total_replicates"
+      - "invalid_denominator_replicates"
+      - "invalid_ratio_replicates"
+      - "invalid_fraction"

@@ -1,0 +1,1000 @@
+{"input": "logic: False or False and True and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 94 * 98 * 41 - 39", "target": "377653", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 55 + 49 - 29 - 76", "target": "-1", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(igloo, 4)", "target": "mkpss", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(elephant, 4)", "target": "ipitlerx", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 43 + 2 + 26 * 63", "target": "1683", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True -> A and B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not False or not False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True -> A and B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(jungle)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 90 + 60", "target": "150", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(jungle, 3)", "target": "mxqjoh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 15 + 51 * 4 * 27", "target": "5523", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(honey)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 28 + 39", "target": "67", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 30 - 35 + 46 + 52", "target": "93", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and False and not True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 53 - 46", "target": "7", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(jungle, 1)", "target": "kvohmf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=True; D=True -> A or not B or C and D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(elephant)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 9 - 45 - 44", "target": "-80", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(grape)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 22 - 13", "target": "9", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 67 + 63 * 3", "target": "256", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or True or False or not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 97 + 28 + 10 * 30", "target": "425", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 2 - 86 * 78 + 95", "target": "-6611", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 26 * 4", "target": "104", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True -> A and B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 49 * 17 * 41 * 94", "target": "3210382", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(falcon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(banana, 3)", "target": "bananabananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 71 * 12", "target": "852", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(grape, 2)", "target": "grapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 8 - 82", "target": "-74", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 9 + 56 * 19", "target": "1073", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(apple, 2)", "target": "appleapple", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(dragon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 61 * 93", "target": "5673", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 27 * 65", "target": "1755", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 83 + 48", "target": "131", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A or B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 30 * 38 * 26", "target": "29640", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 64 - 63 * 30", "target": "-1826", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(igloo, 1)", "target": "jhmpp", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(jungle)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 83 - 97 * 56", "target": "-5349", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(jungle)", "target": "elgnuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=True; D=False -> A or B and C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 36 * 33 - 32 * 17", "target": "644", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not True or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True -> A and B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 60 - 57 * 95", "target": "-5355", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 31 * 99", "target": "3069", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 67 + 80 * 4 - 38", "target": "349", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True or not False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 86 * 61", "target": "5246", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 11 - 15 - 2 - 87", "target": "-93", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(cherry, 1)", "target": "difssz", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or True or not False and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False -> A or not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A and B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 81 + 13 * 80 * 77", "target": "80161", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 12 - 40 + 34", "target": "6", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 86 + 4 - 61 - 86", "target": "-57", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 63 * 38", "target": "2394", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 11 * 67 + 7 - 74", "target": "670", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 50 + 99", "target": "149", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 36 * 3", "target": "108", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 46 + 18 * 67 + 71", "target": "1323", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False -> A and not B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 55 + 84 + 34 - 75", "target": "98", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A and B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 83 + 42 - 2", "target": "123", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 53 * 26", "target": "1378", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 60 + 54 - 16", "target": "98", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(banana, 2)", "target": "dcpcpc", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(igloo, 2)", "target": "kinqq", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(honey, 5)", "target": "mtsjd", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 67 * 38", "target": "2546", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(elephant)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False; C=False -> A and not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(dragon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 36 - 68", "target": "-32", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 46 + 19", "target": "65", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and False and not True or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 19 + 76 + 84", "target": "179", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 73 * 33", "target": "2409", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 33 * 83 * 90 + 40", "target": "246550", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 63 - 22 - 71", "target": "-30", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(cherry, 4)", "target": "cherrycherrycherrycherry", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 79 + 83 * 96", "target": "8047", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 11 * 89 - 97", "target": "882", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A or not B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(igloo, 1)", "target": "jhmpp", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 64 - 64 * 100 * 53", "target": "-339136", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(banana)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 30 * 87 + 93 * 10", "target": "3540", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True; D=True -> A or B or not C and not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or not False and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A and not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False -> A and B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 44 * 94 - 7 * 20", "target": "3996", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 92 * 28 * 30 + 46", "target": "77326", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 85 - 50", "target": "35", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 85 + 58", "target": "143", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(igloo, 3)", "target": "iglooiglooigloo", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 59 - 9 + 88 - 11", "target": "127", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False; D=True -> A and not B or not C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(cherry, 2)", "target": "ejgtta", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 93 - 86 * 3 * 93", "target": "-23901", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 11 + 23 + 19 + 68", "target": "121", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(falcon, 2)", "target": "falconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 21 * 69 + 80", "target": "1529", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 75 + 22 * 32", "target": "779", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 23 + 4", "target": "27", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not True and True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 18 - 25 - 32", "target": "-39", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(apple, 4)", "target": "ettpi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 50 * 46 * 23", "target": "52900", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 64 + 34", "target": "98", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 79 + 2", "target": "81", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 67 + 56", "target": "123", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True -> A and not B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 19 + 9 + 73", "target": "101", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 43 * 59", "target": "2537", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 75 + 87 + 58", "target": "220", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 11 + 43 * 87 - 30", "target": "3722", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 46 + 75 + 75", "target": "196", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 3 - 62 + 93", "target": "34", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False -> A and B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(elephant, 4)", "target": "elephantelephantelephantelephant", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False; C=False -> A or B or C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True; D=False -> A or B and not C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(grape, 4)", "target": "kveti", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(banana)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and not True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(grape)", "target": "eparg", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(dragon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=True; D=False -> A or not B and C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 91 + 70 * 45", "target": "3241", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 91 + 8 * 57", "target": "547", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 56 * 63", "target": "3528", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 93 + 58", "target": "151", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(elephant, 2)", "target": "elephantelephant", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 54 * 81", "target": "4374", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 77 - 94 * 79 * 47", "target": "-348945", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 72 + 79 * 39", "target": "3153", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(banana, 3)", "target": "bananabananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 67 + 4 - 16", "target": "55", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 69 + 54", "target": "123", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A or not B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(jungle)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(elephant, 2)", "target": "elephantelephant", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 97 + 18 + 21", "target": "136", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(dragon)", "target": "nogard", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 59 * 75", "target": "4425", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 43 - 69 - 51 - 32", "target": "-109", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or True and False and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(honey)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=True; D=False -> A or B or C and D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(banana)", "target": "ananab", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A and not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(igloo, 4)", "target": "iglooiglooiglooigloo", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False; C=True -> A and B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(igloo, 5)", "target": "nlqtt", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=False; D=False -> A or B and not C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 88 + 38 + 20", "target": "146", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 99 + 19", "target": "118", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not False and False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 73 + 69 + 71", "target": "213", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(dragon, 4)", "target": "dragondragondragondragon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False; C=True; D=False -> A and not B and not C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True and not True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(dragon, 4)", "target": "hveksr", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and True or not False and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(cherry, 2)", "target": "cherrycherry", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 38 * 18", "target": "684", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True; D=False -> A and B or not C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(apple, 3)", "target": "appleappleapple", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(jungle, 1)", "target": "kvohmf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 62 * 18", "target": "1116", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(cherry)", "target": "yrrehc", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 96 - 57 - 99", "target": "-60", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 97 + 29", "target": "126", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 75 - 98 - 55 + 61", "target": "-17", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 2 + 32 + 20 + 17", "target": "71", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 54 * 65 - 19", "target": "3491", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 26 * 33 + 19 - 50", "target": "827", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or True or not True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 32 * 18", "target": "576", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True; D=False -> A and not B and not C and not D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(elephant, 3)", "target": "elephantelephantelephant", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 33 - 100", "target": "-67", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 57 * 52 - 44", "target": "2920", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 97 * 18 * 8", "target": "13968", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(banana, 1)", "target": "cbobob", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or not False and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 4 + 33", "target": "37", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 7 - 98 * 84 + 69", "target": "-8156", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True; D=False -> A and B and C or D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 71 - 2 - 99 - 91", "target": "-121", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 19 * 15", "target": "285", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(jungle, 2)", "target": "lwping", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=True; D=False -> A and B and C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and False and False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 2 - 48 - 97", "target": "-143", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(igloo)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 14 - 77 - 34", "target": "-97", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False -> A and not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True or not True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or True or not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(elephant)", "target": "tnahpele", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 77 * 29", "target": "2233", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 33 * 93 * 7 - 11", "target": "21472", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 41 - 77", "target": "-36", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True -> A or not B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False; D=False -> A or B and C or D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 95 + 12 * 73 * 26", "target": "22871", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True or True or not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 23 + 84", "target": "107", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False; D=True -> A or B or C or not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 79 * 81", "target": "6399", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 92 - 8 - 2", "target": "82", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False; D=False -> A or B or not C or not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 10 - 89 * 16 * 70", "target": "-99670", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(jungle)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 26 * 71 * 54 * 50", "target": "4984200", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 95 * 38 + 24", "target": "3634", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 14 - 54 + 59", "target": "19", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or not False or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False -> A and not B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and False and False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 47 + 51", "target": "98", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(banana, 2)", "target": "bananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(jungle)", "target": "elgnuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=False; D=True -> A or B or not C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(dragon, 5)", "target": "iwflts", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=True; D=False -> A or not B or C and not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True and False and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False; D=False -> A and not B and C and not D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False -> A or B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 15 + 32", "target": "47", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 65 + 96 - 43 + 84", "target": "202", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and True or not True and not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 45 + 84 + 21", "target": "150", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 45 - 18", "target": "27", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 27 * 93 * 50 + 73", "target": "125623", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(igloo)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 43 - 53", "target": "-10", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(cherry)", "target": "yrrehc", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and not True and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 22 - 51 + 35", "target": "6", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(cherry)", "target": "yrrehc", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 59 + 5 + 25 - 36", "target": "53", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 6 * 35 + 86 * 70", "target": "6230", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or True and not True and not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(banana, 3)", "target": "edqdqd", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 85 * 42 + 32", "target": "3602", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 55 * 42 * 12", "target": "27720", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 99 - 37 + 61", "target": "123", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 29 * 25 - 89 - 18", "target": "618", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True; D=False -> A or not B and not C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False -> A and B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 88 + 71 + 59", "target": "218", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 48 - 63 + 67", "target": "52", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(banana, 2)", "target": "bananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(jungle, 2)", "target": "lwping", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or True and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True; D=False -> A and B and C or D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(falcon, 2)", "target": "falconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 58 - 51", "target": "7", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 98 + 72 + 52", "target": "222", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 8 + 55", "target": "63", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 73 * 3", "target": "219", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or not True and not False and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(jungle)", "target": "elgnuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(dragon)", "target": "nogard", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not False or True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 92 + 85 + 61", "target": "238", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 61 + 84 * 7", "target": "649", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 91 - 8 * 78 + 42", "target": "-491", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(dragon, 3)", "target": "gudjrq", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=False; D=False -> A or B or C and D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 27 + 1 - 33 - 15", "target": "-20", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(falcon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 74 - 53", "target": "21", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 89 * 64 - 61 - 88", "target": "5547", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(apple, 3)", "target": "appleappleapple", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A and not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(falcon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 22 - 83 - 78 - 77", "target": "-216", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(falcon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 15 + 90 - 49 * 61", "target": "-2884", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False; D=False -> A or not B or C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(igloo, 3)", "target": "iglooiglooigloo", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 51 - 38", "target": "13", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 34 * 3", "target": "102", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(honey)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=True -> A or B and C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or False and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A or not B and not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 4 * 50", "target": "200", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 65 - 18 * 26 * 93", "target": "-43459", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 21 + 1", "target": "22", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 26 - 10 * 37 + 9", "target": "-335", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(jungle, 3)", "target": "mxqjoh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=False; D=True -> A or not B or C and not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(falcon, 3)", "target": "falconfalconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 78 - 86 * 16 - 12", "target": "-1310", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A and B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(dragon, 2)", "target": "dragondragon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(igloo)", "target": "oolgi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 30 + 42 - 96 * 68", "target": "-6456", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 74 - 56 - 51", "target": "-33", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 56 + 4 * 61", "target": "300", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(dragon)", "target": "nogard", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 26 + 31 - 62", "target": "-5", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 65 * 7", "target": "455", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True; D=True -> A or B or C and D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 16 * 90 + 77 * 59", "target": "5983", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 87 + 67 * 63", "target": "4308", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 49 * 28", "target": "1372", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or not False or not True and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 99 + 41 - 82", "target": "58", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 77 + 27 * 68 - 59", "target": "1854", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True -> A or not B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 15 - 60 * 15", "target": "-885", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True; D=False -> A or B or not C and not D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 99 + 75", "target": "174", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False; D=False -> A or not B and C or D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 12 - 65 * 63 - 15", "target": "-4098", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 95 * 89 - 71", "target": "8384", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 98 + 57 * 52", "target": "3062", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 92 - 24 + 62 + 13", "target": "143", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 52 - 90", "target": "-38", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(apple, 3)", "target": "dssoh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=False -> A and not B or C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or not True and False and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 70 * 1 + 48 + 32", "target": "150", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(grape, 2)", "target": "grapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True -> A and B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True -> A and B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(igloo)", "target": "oolgi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 7 * 47", "target": "329", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(igloo, 5)", "target": "nlqtt", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(elephant)", "target": "tnahpele", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 23 - 55", "target": "-32", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 17 * 32 * 89 + 20", "target": "48436", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False -> A or not B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 24 * 82 * 28 + 6", "target": "55110", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 32 + 65", "target": "97", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 48 + 32 * 92 * 39", "target": "114864", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True -> A or not B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 22 - 23 + 15", "target": "14", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 89 - 77 - 85 + 53", "target": "-20", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True -> A or not B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 52 + 39 - 18", "target": "73", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(igloo)", "target": "oolgi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 84 * 75 - 23 * 60", "target": "4920", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(igloo)", "target": "oolgi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 75 - 64", "target": "11", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 79 + 24 * 32", "target": "847", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True; D=False -> A and B and C or D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 99 - 25 + 65", "target": "139", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 37 + 39 + 40 - 52", "target": "64", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(cherry, 3)", "target": "fkhuub", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 14 - 34 * 12 + 30", "target": "-364", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 10 + 97", "target": "107", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(igloo, 3)", "target": "iglooiglooigloo", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=False -> A and B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 93 * 69 * 92 * 67", "target": "39554388", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 44 - 6 + 52", "target": "90", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(cherry)", "target": "yrrehc", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True or not True or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 39 - 90 * 71", "target": "-6351", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and True and True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 88 + 68 - 21 + 28", "target": "163", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False -> A or B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 18 + 58 * 72 - 3", "target": "4191", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 61 + 99 * 71 * 67", "target": "471004", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(honey, 1)", "target": "ipofz", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 21 + 99 - 33", "target": "87", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 87 * 47", "target": "4089", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 81 * 39 - 68 * 61", "target": "-989", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True and False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 52 - 94", "target": "-42", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(grape, 2)", "target": "itcrg", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(apple, 2)", "target": "appleapple", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 29 + 13 * 3", "target": "68", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 3 - 92 - 92", "target": "-181", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 42 - 75", "target": "-33", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 57 + 71", "target": "128", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 80 * 38", "target": "3040", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(igloo)", "target": "oolgi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 44 + 68", "target": "112", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 55 - 37 * 5 * 7", "target": "-1240", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 96 * 58 + 85 + 2", "target": "5655", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(falcon, 3)", "target": "falconfalconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(banana)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(igloo)", "target": "oolgi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(honey, 2)", "target": "jqpga", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 7 - 10 - 26", "target": "-29", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 72 - 95 * 6", "target": "-498", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 61 - 57", "target": "4", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 71 * 66 * 76 * 34", "target": "12108624", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not False or True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(dragon)", "target": "nogard", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or not False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(elephant)", "target": "tnahpele", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 58 + 45 * 5", "target": "283", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 40 - 33", "target": "7", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and False or True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or not True or not True and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and not True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 76 - 75", "target": "1", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(grape)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(igloo)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=True -> A or not B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 84 + 69 * 79", "target": "5535", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 55 - 93 * 53", "target": "-4874", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(falcon, 4)", "target": "jepgsr", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and False and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(elephant, 2)", "target": "elephantelephant", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=False; D=False -> A and not B and C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(grape, 2)", "target": "grapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 78 * 29 + 26", "target": "2288", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(grape, 3)", "target": "judsh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 17 - 34 + 36", "target": "19", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 79 * 25 + 33", "target": "2008", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 33 - 60", "target": "-27", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 57 + 52 + 4", "target": "113", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 56 + 83", "target": "139", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(falcon, 5)", "target": "kfqhts", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and False or not False and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 78 + 45", "target": "123", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 51 - 26", "target": "25", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 22 - 25 - 72", "target": "-75", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False; D=False -> A and B or not C and D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A and not B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 37 * 5 * 72", "target": "13320", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(honey)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False or not True or not True or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 16 + 9", "target": "25", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False; D=True -> A or B or C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False -> A or B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 79 + 31 + 19 * 93", "target": "1877", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not True or not True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 3 + 94", "target": "97", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 68 * 10", "target": "680", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 44 * 95 - 65 - 85", "target": "4030", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(grape, 5)", "target": "lwfuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=True; D=True -> A and B or C or not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True -> A and B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True -> A and not B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False -> A or not B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(jungle, 2)", "target": "junglejungle", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 68 - 59 * 46 - 44", "target": "-2690", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True -> A or not B and not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(grape, 3)", "target": "grapegrapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(elephant, 3)", "target": "hohskdqw", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(banana, 2)", "target": "bananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=False; D=False -> A and B and C and not D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(honey)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(jungle)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(falcon, 4)", "target": "jepgsr", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=False -> A and not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(igloo, 4)", "target": "iglooiglooiglooigloo", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(jungle)", "target": "elgnuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 23 * 7 + 53", "target": "214", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(banana, 3)", "target": "bananabananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(jungle, 4)", "target": "junglejunglejunglejungle", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(honey, 4)", "target": "honeyhoneyhoneyhoney", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(elephant)", "target": "tnahpele", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 90 * 13 - 79", "target": "1091", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 96 + 61", "target": "157", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True; D=True -> A and B or C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 45 * 87 * 47 - 43", "target": "183962", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 91 * 96 + 3", "target": "8739", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(elephant)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(elephant, 3)", "target": "hohskdqw", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 57 * 53 + 86", "target": "3107", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(honey, 3)", "target": "krqhb", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(grape)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 77 + 73 - 60", "target": "90", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(grape)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(jungle)", "target": "elgnuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 27 * 94 + 38", "target": "2576", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(elephant, 3)", "target": "elephantelephantelephant", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False; C=False; D=True -> A and B or not C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(grape)", "target": "eparg", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 84 - 68 + 79", "target": "95", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(dragon, 3)", "target": "gudjrq", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(igloo)", "target": "oolgi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 59 - 5 + 51 * 19", "target": "1023", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 89 - 78", "target": "11", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 5 - 66 + 69", "target": "8", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 13 - 80 * 75 - 91", "target": "-6078", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 94 - 67", "target": "27", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 63 + 96", "target": "159", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 32 + 50 * 15 + 21", "target": "803", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(grape, 3)", "target": "judsh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(igloo, 1)", "target": "jhmpp", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A and not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 44 + 23 - 79", "target": "-12", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 31 + 62 * 90", "target": "5611", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(banana, 4)", "target": "bananabananabananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 37 * 38 + 45 * 14", "target": "2036", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True; D=True -> A and B and C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 65 - 13 + 4", "target": "56", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 23 - 87 * 31", "target": "-2674", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 78 * 39 - 36", "target": "3006", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 92 - 5 + 85 + 20", "target": "192", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True; D=False -> A or B and C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 41 + 31 - 68", "target": "4", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 50 * 80 - 4", "target": "3996", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 47 + 74", "target": "121", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or False and not True and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 16 - 24 - 1", "target": "-9", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A or B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False; D=True -> A or not B or C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(honey)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 26 - 84 - 100 * 81", "target": "-8158", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and False and True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 4 * 10 - 5 - 11", "target": "24", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(falcon, 3)", "target": "falconfalconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=False; D=True -> A and B and C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 6 * 57", "target": "342", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not False or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 89 + 99", "target": "188", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 29 - 77 + 46", "target": "-2", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 81 - 3 + 94", "target": "172", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 8 - 33 + 80", "target": "55", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 31 - 34 * 49", "target": "-1635", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 42 * 58 * 10 * 55", "target": "1339800", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and True and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 39 + 18", "target": "57", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 37 - 21 + 19 - 36", "target": "-1", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True -> A or B and C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 55 - 56", "target": "-1", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 4 - 63 * 25 * 40", "target": "-62996", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False; D=True -> A or B or C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(falcon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 35 + 40", "target": "75", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 100 - 97 + 87 * 94", "target": "8181", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 9 * 32 + 16", "target": "304", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 55 - 88 + 48", "target": "15", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 43 - 34 * 11 + 48", "target": "-283", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or False and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(honey)", "target": "yenoh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or not False and False and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True -> A and B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 56 * 45", "target": "2520", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 59 + 56", "target": "115", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 47 + 65 * 100 * 44", "target": "286047", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not False and not True or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(grape, 2)", "target": "grapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True; D=True -> A and not B or C or not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False; D=False -> A and not B or not C and not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(igloo)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 33 * 44 * 81 * 36", "target": "4234032", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(honey, 1)", "target": "ipofz", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 37 * 8 - 28 + 98", "target": "366", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 61 * 21 * 86 + 35", "target": "110201", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 21 * 63", "target": "1323", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 4 + 40", "target": "44", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 57 + 55 * 28", "target": "1597", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 25 - 50 - 16", "target": "-41", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 76 + 14 * 76", "target": "1140", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 15 * 57", "target": "855", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(elephant, 5)", "target": "jqjumfsy", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(banana, 3)", "target": "edqdqd", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=False; D=True -> A and not B and C or not D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and not True or not False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 30 + 25 * 42 - 49", "target": "1031", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True; D=False -> A and not B and not C or not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(cherry, 3)", "target": "cherrycherrycherry", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(cherry, 2)", "target": "ejgtta", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True; D=True -> A and B and C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True and not True or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(dragon, 3)", "target": "gudjrq", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 23 + 95", "target": "118", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(falcon, 4)", "target": "jepgsr", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False -> A or B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 50 - 45", "target": "5", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(grape, 5)", "target": "lwfuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 75 * 94", "target": "7050", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 59 + 16 - 3 * 60", "target": "-105", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and True or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 97 - 68", "target": "29", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not False and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False; D=True -> A and B or not C or not D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 95 + 18", "target": "113", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(banana, 5)", "target": "gfsfsf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(apple, 3)", "target": "dssoh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(dragon, 5)", "target": "iwflts", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or not False or not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not False or True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(apple, 2)", "target": "crrng", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(jungle)", "target": "elgnuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=True; D=True -> A or not B and not C and D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=True; C=False; D=True -> A and B or not C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 84 - 26", "target": "58", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(elephant)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and False or False and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 63 * 56 + 84 * 44", "target": "7224", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False and False and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(dragon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 45 * 11 - 89", "target": "406", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(jungle, 4)", "target": "nyrkpi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 67 - 69 * 2", "target": "-71", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 84 * 42", "target": "3528", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 29 * 17 + 30", "target": "523", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 3 * 67 + 84 * 39", "target": "3477", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(apple, 1)", "target": "bqqmf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 7 * 96", "target": "672", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A or B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 63 + 78 + 71 - 39", "target": "173", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 78 * 89 * 44 + 73", "target": "305521", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not True and not False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 95 + 1", "target": "96", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 38 - 64", "target": "-26", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(falcon, 3)", "target": "idofrq", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 84 * 17", "target": "1428", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 41 + 43 * 90", "target": "3911", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(jungle, 1)", "target": "kvohmf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False -> A and B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A and B or C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 38 + 46 * 26", "target": "1234", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 71 + 40", "target": "111", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 59 + 92 + 10", "target": "161", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 43 * 99 + 64 + 89", "target": "4410", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(igloo, 3)", "target": "ljorr", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 88 + 98", "target": "186", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 25 * 97", "target": "2425", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False; D=False -> A and B or not C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A and B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(falcon, 2)", "target": "falconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 67 + 15", "target": "82", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(dragon)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 83 + 74 * 79", "target": "5929", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(cherry, 3)", "target": "cherrycherrycherry", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 69 + 24 - 57 * 51", "target": "-2814", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 16 - 2 * 3", "target": "10", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 98 * 55 * 18 * 2", "target": "194040", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(dragon)", "target": "nogard", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A and B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(falcon, 2)", "target": "hcneqp", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(igloo, 3)", "target": "ljorr", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 3 * 13", "target": "39", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(banana)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False; C=True; D=True -> A or B and not C or not D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 61 - 84", "target": "-23", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True and True or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True or not True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 59 + 30", "target": "89", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or True and False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 90 * 65", "target": "5850", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 83 - 77 + 22", "target": "28", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(falcon, 2)", "target": "hcneqp", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=True -> A and not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 38 + 44", "target": "82", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(falcon, 2)", "target": "falconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 55 + 22", "target": "77", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(elephant, 2)", "target": "elephantelephant", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 25 - 86 - 82", "target": "-143", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 8 - 13 - 60", "target": "-65", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(falcon, 2)", "target": "falconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 89 - 71 * 6 + 70", "target": "-267", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(jungle)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(grape, 4)", "target": "grapegrapegrapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True; C=False -> A and B or C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 35 * 62 + 38", "target": "2208", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True -> A and B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not True and not True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 8 * 60 * 49", "target": "23520", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(apple, 1)", "target": "bqqmf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(grape, 5)", "target": "lwfuj", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=False -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(jungle)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A or not B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 55 * 52 - 79", "target": "2781", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 40 * 38 + 30", "target": "1550", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(cherry, 4)", "target": "glivvc", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 9 * 99 - 70 - 26", "target": "795", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 10 * 54 + 38", "target": "578", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not False or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(banana)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 46 - 18", "target": "28", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and False or not True and not False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 53 + 78 * 32", "target": "2549", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True -> A and not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 55 * 69", "target": "3795", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True or not True and True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(banana, 5)", "target": "gfsfsf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 62 - 100", "target": "-38", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 49 - 37 * 11 + 9", "target": "-349", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(jungle, 2)", "target": "lwping", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=False; C=True; D=False -> A or B or C and D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(honey)", "target": "yenoh", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and not False and not False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(cherry, 2)", "target": "cherrycherry", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(grape, 2)", "target": "grapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 44 + 72 - 74 + 57", "target": "99", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 24 - 32 + 18 - 50", "target": "-40", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(elephant)", "target": "tnahpele", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: False or not True and True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True; D=False -> A and B or C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 70 * 28", "target": "1960", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 97 + 66 + 79 - 87", "target": "155", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True; D=True -> A and not B or not C and not D?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: repeat(cherry, 2)", "target": "cherrycherry", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 85 - 37 + 11 * 77", "target": "895", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False; D=True -> A or B or C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 18 - 85 - 96", "target": "-163", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True; C=False -> A and not B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 89 + 64", "target": "153", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 18 + 18 - 26", "target": "10", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 7 - 14", "target": "-7", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 39 + 43 + 77", "target": "159", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(elephant, 3)", "target": "hohskdqw", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(dragon, 2)", "target": "dragondragon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 59 * 63 + 99 * 78", "target": "11439", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 83 - 47 * 53 * 66", "target": "-164323", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or False or not True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True -> A and B and C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=True; C=True -> A and B and C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 17 + 56 * 98", "target": "5505", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 69 * 94 * 37", "target": "239982", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 96 + 67", "target": "163", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 59 * 68", "target": "4012", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not False or True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A and not B and not C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: repeat(falcon, 4)", "target": "falconfalconfalconfalcon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=True -> A and not B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 80 * 44 * 1 * 6", "target": "21120", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A or not B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 65 + 80 - 2", "target": "143", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(falcon, 3)", "target": "idofrq", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 62 - 98", "target": "-36", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True -> A and not B or not C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and not False or not True and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 71 + 68 - 60", "target": "79", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 7 - 98 * 8 * 50", "target": "-39193", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(honey, 3)", "target": "honeyhoneyhoney", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 73 + 50 - 53 * 87", "target": "-4488", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 8 + 63", "target": "71", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 83 + 61", "target": "144", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: shift(jungle, 4)", "target": "nyrkpi", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 73 * 98 * 96 + 96", "target": "686880", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False and False or not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or False or False and not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=True; B=False; C=False -> A or B and C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: count_vowels(elephant)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 54 - 42 - 88", "target": "-76", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(falcon, 5)", "target": "kfqhts", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 44 * 97", "target": "4268", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=True -> A or B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 70 - 70 - 92", "target": "-92", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 94 + 79 + 70 + 31", "target": "274", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and True and False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and not False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(elephant)", "target": "tnahpele", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 26 + 43 + 21 + 47", "target": "137", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True or not True or not False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or False and True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or not False and False and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: False or False or False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or not False or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False -> A or not B?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 84 * 89 * 18 * 68", "target": "9150624", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 5 - 45 + 26 - 94", "target": "-108", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(grape, 4)", "target": "grapegrapegrapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 3 + 59 - 29 - 46", "target": "-13", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(elephant)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 88 * 86", "target": "7568", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=True; C=True; D=False -> A or B or not C or D?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: A=False; B=False -> A and B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 41 + 11 + 39 + 10", "target": "101", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 89 + 59 - 90", "target": "58", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 47 + 71 * 24", "target": "1751", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 7 - 5", "target": "2", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(banana, 4)", "target": "bananabananabananabanana", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A and not B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 83 * 17 + 14", "target": "1425", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(grape)", "target": "eparg", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=False; B=True -> A or not B?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 64 * 15 - 83", "target": "877", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=False -> A and not B and C?", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 8 - 71", "target": "-63", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(dragon, 4)", "target": "dragondragondragondragon", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 34 - 87 + 69 + 63", "target": "79", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True and not True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 72 - 16 + 81 - 25", "target": "112", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: shift(honey, 2)", "target": "jqpga", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 91 - 94 + 44 - 99", "target": "-58", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(cherry)", "target": "yrrehc", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: A=True; B=True; C=True -> A or B and C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True and False and True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 51 + 78", "target": "129", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 97 + 18", "target": "115", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 85 - 21 + 87", "target": "151", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 11 + 89 - 27 * 39", "target": "-953", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(apple)", "target": "elppa", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 16 - 46 - 59 - 25", "target": "-114", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: False or not True and False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "lang: reverse(falcon)", "target": "noclaf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 14 + 73 * 43", "target": "3153", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: shift(banana, 5)", "target": "gfsfsf", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 14 - 31", "target": "-17", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 79 + 22 * 52 * 13", "target": "14951", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=True; B=False; C=True -> A and not B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "logic: True or True or True or False", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 10 + 25 - 74", "target": "-39", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: count_vowels(apple)", "target": "2", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "logic: True and not False and not False and not True", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 40 - 61 - 18", "target": "-39", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 18 * 32", "target": "576", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: reverse(dragon)", "target": "nogard", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(banana)", "target": "3", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: count_vowels(cherry)", "target": "1", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "lang: reverse(banana)", "target": "ananab", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 61 * 8 * 87 - 24", "target": "42432", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True and False or False", "target": "False", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 83 - 69 - 28", "target": "-14", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "lang: repeat(grape, 3)", "target": "grapegrapegrape", "domain": "language", "oracle_dist": [0.0, 0.0, 1.0]}
+{"input": "calc: 84 * 12", "target": "1008", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "calc: 12 * 2", "target": "24", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: True or not True or True or True", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}
+{"input": "calc: 30 * 51", "target": "1530", "domain": "arithmetic", "oracle_dist": [1.0, 0.0, 0.0]}
+{"input": "logic: A=False; B=False; C=True -> A or B or C?", "target": "True", "domain": "logic", "oracle_dist": [0.0, 1.0, 0.0]}

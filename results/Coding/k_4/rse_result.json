@@ -1,18 +1,18 @@
 {
   "metrics": {
     "ESP": {
-      "value": 0.00843416109810391,
+      "value": 0.002123337216938137,
       "ci95": [
-        -0.005721789766885618,
-        0.022384093492120342
+        -0.012999823436252732,
+        0.01736990189666188
       ],
       "status": "statistically_indistinguishable_from_zero"
     },
     "denominator": {
-      "delta_search_random": -0.0023502552870854343,
+      "delta_search_random": -0.0009590426819888753,
       "ci95": [
-        -0.01167228578748631,
-        0.0070836248183330725
+        -0.010399008957475555,
+        0.008472878067755927
       ],
       "status": "unstable_denominator"
     },
@@ -25,9 +25,9 @@
   },
   "bootstrap_diagnostics": {
     "total_replicates": 10000,
-    "invalid_denominator_replicates": 6798,
-    "invalid_ratio_replicates": 6798,
-    "invalid_fraction": 0.6798,
+    "invalid_denominator_replicates": 5782,
+    "invalid_ratio_replicates": 5782,
+    "invalid_fraction": 0.5782,
     "posthoc_exclusion": false
   },
   "experiment": {

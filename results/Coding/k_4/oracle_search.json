@@ -25,9 +25,9 @@
   "k": 4,
   "selected_subset": [
     1,
-    10,
-    13,
-    15
+    2,
+    3,
+    13
   ],
   "implementation_version": "v0.12-final-ref1"
 }

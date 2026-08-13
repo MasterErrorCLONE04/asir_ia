@@ -6,11 +6,11 @@
     "description": "R1.3 Sparse Selector Evaluation pre-registration"
   },
   "quality_metric": {
-    "name": "exact_match",
-    "source_metric": "exact_match",
-    "transform": "identity",
+    "name": "negative_cross_entropy",
+    "source_metric": "cross_entropy",
+    "transform": "negate",
     "direction": "maximize",
-    "unit": "proportion"
+    "unit": "nats"
   },
 
   "candidate_space": {
@@ -24,7 +24,7 @@
   "oracle_search": {
     "method": "greedy",
     "objective": {
-      "metric": "exact_match",
+      "metric": "negative_cross_entropy",
       "direction": "maximize",
       "dataset_split": "B"
     },

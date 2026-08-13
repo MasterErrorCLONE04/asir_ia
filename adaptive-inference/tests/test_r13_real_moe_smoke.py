@@ -58,12 +58,17 @@ class TestR13RealMoESmoke(unittest.TestCase):
             for i, s in enumerate(raw_samples)
         ]
 
-        # Forced routing mask for S={0, 2, 4, 6}
         subset_S = (0, 2, 4, 6)
-        scores_ex = adapter.eval_subset_quality_per_example(samples, subset_S, max_gen_len=5)
-
+        # Default metric is negative_cross_entropy
+        scores_ex = adapter.eval_subset_quality_per_example(samples, subset_S)
         self.assertEqual(len(scores_ex), 10)
         for val in scores_ex:
+            self.assertTrue(val < 0.0)
+
+        # Optional metric is exact_match
+        scores_em = adapter.eval_subset_quality_per_example(samples, subset_S, metric_name="exact_match", max_gen_len=5)
+        self.assertEqual(len(scores_em), 10)
+        for val in scores_em:
             self.assertIn(val, [0.0, 1.0])
 
     def test_real_moe_full_r13_pipeline_execution(self):
@@ -113,7 +118,7 @@ class TestR13RealMoESmoke(unittest.TestCase):
         self.assertEqual(len(s_oracle), 4)
 
         # 4. Random Reference sampling & freeze
-        s_random_list, random_card = sample_random_reference_subsets(pool_size=8, k=4, N_random=3)
+        s_random_list, random_card = sample_random_reference_subsets(pool_size=8, k=4, N_random=5)
 
         # 5. Evaluation on C with PyTorch model
         q_selector_ex = adapter.eval_subset_quality_per_example(c_ex, s_selector, max_gen_len=5)
@@ -140,6 +145,38 @@ class TestR13RealMoESmoke(unittest.TestCase):
         self.assertTrue(os.path.exists(saved["config_snapshot"]))
         self.assertTrue(os.path.exists(saved["grouping"]))
         self.assertTrue(os.path.exists(saved["rse_result"]))
+
+    def test_prompt_only_selector_profiling_isolation(self):
+        """Validates that selector profiling is strictly prompt-only and target changes do not affect S_selector."""
+        tokenizer = CharTokenizer()
+        device = torch.device("cpu")
+        model = MoETransformer(
+            vocab_size=tokenizer.vocab_size,
+            d_model=64,
+            n_layers=2,
+            num_heads=2,
+            d_ff=128,
+            max_seq_len=128,
+            moe=True,
+            num_experts=8,
+            top_k=2
+        ).to(device)
+
+        # Construct two sets of dataset samples with identical inputs/prompts but different targets
+        samples_a = [
+            {"input": "def hello():", "target": "print('hello')"},
+            {"input": "def add(x, y):", "target": "return x + y"}
+        ]
+        samples_b = [
+            {"input": "def hello():", "target": "return 'hello world'"},
+            {"input": "def add(x, y):", "target": "sum = x + y; return sum"}
+        ]
+
+        s_selector_a = profile_selector_on_split_a(model, samples_a, k=3, tokenizer=tokenizer, device=device)
+        s_selector_b = profile_selector_on_split_a(model, samples_b, k=3, tokenizer=tokenizer, device=device)
+
+        self.assertEqual(s_selector_a, s_selector_b)
+        self.assertEqual(len(s_selector_a), 3)
 
 
 if __name__ == "__main__":

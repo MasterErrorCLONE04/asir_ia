@@ -38,6 +38,8 @@ from analysis.oracle_search import run_oracle_search
 from analysis.artifacts import save_artifact_snapshot
 from analysis.model_adapter import MoEModelAdapter, load_moe_model_from_checkpoint, HAS_TORCH as ADAPTER_HAS_TORCH
 from analysis.moe_profiler import profile_selector_on_split_a
+from analysis.random_reference import sample_random_reference_subsets
+from analysis.evaluator import compute_paired_bootstrap_metrics
 
 
 if HAS_TORCH:
@@ -78,6 +80,15 @@ def load_real_or_synthetic_dataset(data_path: Optional[str] = None, n_synthetic:
     return samples
 
 
+def compute_sha256(filepath: str) -> str:
+    import hashlib
+    sha256 = hashlib.sha256()
+    with open(filepath, "rb") as f:
+        while chunk := f.read(8192):
+            sha256.update(chunk)
+    return sha256.hexdigest()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Executes R1.3 evaluation pipeline (v0.12-final).")
     parser.add_argument("--config", type=str, required=True, help="Path to pre-registered YAML/JSON config.")
@@ -101,28 +112,52 @@ def main():
     k = cfg["candidate_space"]["subset_size_k"]
     pool_size = cfg["candidate_space"]["expert_pool_size"]
 
+    metric_name = cfg["quality_metric"]["name"]
+    checkpoint_sha256 = "N/A"
+
     if HAS_TORCH and not args.dry_run:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         model_cfg = get_model_config(args.model)
         pool_size = model_cfg["num_experts"] if model_cfg["moe"] else pool_size
         tokenizer = CharTokenizer()
 
-        if args.checkpoint and os.path.exists(args.checkpoint):
+        # Checkpoint requirement verification
+        if not args.cpu_smoke_test and not args.dry_run:
+            if not args.checkpoint:
+                raise ValueError("Scientific evaluation run requires a trained model checkpoint (--checkpoint).")
+            if not os.path.exists(args.checkpoint):
+                raise FileNotFoundError(f"Checkpoint file not found: {args.checkpoint}")
+
+        if args.checkpoint:
+            if not os.path.exists(args.checkpoint):
+                raise FileNotFoundError(f"Checkpoint file not found: {args.checkpoint}")
+            checkpoint_sha256 = compute_sha256(args.checkpoint)
+            print(f"Verified checkpoint SHA256: {checkpoint_sha256}")
             print(f"Loading MoETransformer model {args.model} from checkpoint {args.checkpoint} on device {device}...")
             model = load_moe_model_from_checkpoint(args.checkpoint, model_name=args.model, device=device)
         else:
             print(f"Initializing MoETransformer model {args.model} (untrained) on device {device}...")
             model = MoETransformer(
                 vocab_size=tokenizer.vocab_size,
-                d_model=1408,
-                n_layers=5,
-                num_heads=8,
-                d_ff=512,
-                max_seq_len=256,
+                d_model=64 if args.cpu_smoke_test else 1408,
+                n_layers=2 if args.cpu_smoke_test else 5,
+                num_heads=2 if args.cpu_smoke_test else 8,
+                d_ff=128 if args.cpu_smoke_test else 512,
+                max_seq_len=128 if args.cpu_smoke_test else 256,
                 moe=model_cfg["moe"],
                 num_experts=pool_size,
                 top_k=model_cfg["top_k"]
             ).to(device)
+
+        # Verify model architecture matches config
+        if model_cfg["moe"]:
+            actual_num_experts = model.blocks[0].ffn.num_experts
+            actual_top_k = model.blocks[0].ffn.top_k
+            if actual_num_experts != pool_size:
+                raise ValueError(f"Model num_experts ({actual_num_experts}) does not match expected pool size ({pool_size})")
+            if actual_top_k != model_cfg["top_k"]:
+                raise ValueError(f"Model top_k ({actual_top_k}) does not match model config top_k ({model_cfg['top_k']})")
+        print(f"Model architecture validation passed: moe={model.moe}, num_experts={pool_size}, top_k={model_cfg.get('top_k', 0)}")
 
         adapter = MoEModelAdapter(model, tokenizer, device)
         use_pytorch = True
@@ -130,7 +165,6 @@ def main():
         print("Running with synthetic/mock evaluation mode...")
         use_pytorch = False
         rng = np.random.default_rng(42)
-(42)
 
     if args.output_dir:
         out_dir = args.output_dir
@@ -165,7 +199,7 @@ def main():
     # 5. Oracle Search Search(B, k) on Dataset B
     print("\n[Step 3/6] Running Oracle Search Search(B,k) on Dataset B...")
     if use_pytorch:
-        eval_fn_b = lambda subset: adapter.eval_subset_mean_quality(b_examples, subset)
+        eval_fn_b = lambda subset: adapter.eval_subset_mean_quality(b_examples, subset, metric_name=metric_name)
     else:
         eval_fn_b = lambda subset: float(np.mean([np.max(ex["expert_scores"][list(subset)]) for ex in b_examples]))
 
@@ -186,14 +220,32 @@ def main():
     )
     print(f"  S_random ({len(s_random_list)} frozen subsets sampled)")
 
+    # Verify candidate space consistency before C evaluation
+    selector_pool_size = pool_size
+    oracle_pool_size = oracle_cfg["pool_size"]
+    max_expert_id = max(
+        max(s_selector) if s_selector else -1,
+        max(s_oracle) if s_oracle else -1,
+        max(max(s) if s else -1 for s in s_random_list) if s_random_list else -1
+    )
+    if max_expert_id >= pool_size:
+        raise ValueError(
+            f"Expert ID {max_expert_id} exceeds pool size {pool_size}."
+        )
+    if selector_pool_size != oracle_pool_size:
+        raise ValueError(
+            f"Selector pool size ({selector_pool_size}) and Oracle pool size ({oracle_pool_size}) mismatch."
+        )
+    print("Candidate space consistency check: PASS (selector pool == oracle pool == random pool)")
+
     # 7. Evaluation on C with paired example-level bootstrap
     print("\n[Step 5/6] Evaluating on Dataset C with Paired Example Bootstrap...")
     if use_pytorch:
-        q_selector_ex = adapter.eval_subset_quality_per_example(c_examples, s_selector)
-        q_oracle_ex = adapter.eval_subset_quality_per_example(c_examples, s_oracle)
+        q_selector_ex = adapter.eval_subset_quality_per_example(c_examples, s_selector, metric_name=metric_name)
+        q_oracle_ex = adapter.eval_subset_quality_per_example(c_examples, s_oracle, metric_name=metric_name)
         q_random_ex_matrix = np.zeros((len(s_random_list), len(c_examples)))
         for j, s_rand in enumerate(s_random_list):
-            q_random_ex_matrix[j] = adapter.eval_subset_quality_per_example(c_examples, s_rand)
+            q_random_ex_matrix[j] = adapter.eval_subset_quality_per_example(c_examples, s_rand, metric_name=metric_name)
     else:
         q_selector_ex = np.array([np.max(ex["expert_scores"][list(s_selector)]) for ex in c_examples])
         q_oracle_ex = np.array([np.max(ex["expert_scores"][list(s_oracle)]) for ex in c_examples])
@@ -212,9 +264,22 @@ def main():
         seed=42
     )
 
+    # Materialize candidate space pool size dynamically
+    actual_candidate_space = cfg["candidate_space"].copy()
+    actual_candidate_space["expert_pool_size"] = pool_size
+    actual_candidate_space["expert_pool_source"] = "model.num_experts" if (use_pytorch and model_cfg["moe"]) else "config"
+
     # Attach experiment metadata
     rse_result["experiment"] = cfg["experiment"]
-    rse_result["candidate_space"] = cfg["candidate_space"]
+    rse_result["candidate_space"] = actual_candidate_space
+    rse_result["model"] = {
+        "architecture": args.model,
+        "checkpoint": args.checkpoint if args.checkpoint else "untrained",
+        "checkpoint_sha256": checkpoint_sha256,
+        "num_experts": pool_size,
+        "top_k": model_cfg["top_k"] if (use_pytorch and model_cfg["moe"]) else 0,
+        "weights_frozen": True
+    }
     rse_result["random_reference"] = {
         "N": len(s_random_list),
         "frozen": True,

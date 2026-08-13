@@ -22,6 +22,7 @@ if HAS_TORCH:
     from training.models.transformer import MoETransformer
     from tasks.tokenizer import CharTokenizer
     from training.train import generate_autoregressive, get_model_config
+    from training.losses.losses import autoregressive_cross_entropy_loss
 
 
 def load_moe_model_from_checkpoint(
@@ -93,14 +94,16 @@ class MoEModelAdapter:
         self,
         samples: List[Dict[str, Any]],
         subset_S: Tuple[int, ...],
+        metric_name: str = "negative_cross_entropy",
         max_gen_len: int = 30
     ) -> np.ndarray:
         """
-        Evaluates Exact-Match Quality Q_i(S) for each individual sample in `samples`
+        Evaluates Quality Q_i(S) for each individual sample in `samples`
         under the forced routing mask for expert subset `subset_S`.
+        Supports both 'negative_cross_entropy' (default) and 'exact_match'.
 
         Returns:
-            np.ndarray of shape (len(samples),) with 1.0 for exact match, 0.0 otherwise.
+            np.ndarray of shape (len(samples),) with quality scores.
         """
         self.model.eval()
         scores = []
@@ -111,19 +114,36 @@ class MoEModelAdapter:
                 prompt_str = sample["input"]
                 target_str = sample["target"]
 
-                prompt_encoded = self.tokenizer.encode(prompt_str, add_bos=True, add_eos=False)
-                gen_ids = generate_autoregressive(
-                    self.model,
-                    prompt_encoded,
-                    self.tokenizer.sep_id,
-                    self.tokenizer.eos_id,
-                    mask_S,
-                    max_gen_len=max_gen_len
-                )
-                gen_str = self.tokenizer.decode(gen_ids, skip_special_tokens=True)
+                if metric_name == "exact_match":
+                    prompt_encoded = self.tokenizer.encode(prompt_str, add_bos=True, add_eos=False)
+                    gen_ids = generate_autoregressive(
+                        self.model,
+                        prompt_encoded,
+                        self.tokenizer.sep_id,
+                        self.tokenizer.eos_id,
+                        mask_S,
+                        max_gen_len=max_gen_len
+                    )
+                    gen_str = self.tokenizer.decode(gen_ids, skip_special_tokens=True)
+                    is_exact_match = 1.0 if gen_str.strip() == target_str.strip() else 0.0
+                    scores.append(is_exact_match)
+                elif metric_name == "negative_cross_entropy":
+                    prompt_encoded = self.tokenizer.encode(prompt_str, add_bos=True, add_eos=False)
+                    sep_ids = [self.tokenizer.sep_id]
+                    target_encoded = self.tokenizer.encode(target_str, add_bos=False, add_eos=True)
 
-                is_exact_match = 1.0 if gen_str.strip() == target_str.strip() else 0.0
-                scores.append(is_exact_match)
+                    input_ids_list = prompt_encoded + sep_ids + target_encoded
+                    input_ids = torch.tensor([input_ids_list], dtype=torch.long, device=self.device)
+
+                    prompt_len = len(prompt_encoded) + len(sep_ids)
+                    labels = [self.tokenizer.pad_id] * prompt_len + target_encoded
+                    labels_tensor = torch.tensor([labels], dtype=torch.long, device=self.device)
+
+                    logits, _ = self.model(input_ids, mask=mask_S)
+                    loss = autoregressive_cross_entropy_loss(logits, labels_tensor, self.tokenizer.pad_id)
+                    scores.append(-loss.item())
+                else:
+                    raise ValueError(f"Unknown metric name: {metric_name}")
 
         return np.array(scores, dtype=np.float64)
 
@@ -131,10 +151,13 @@ class MoEModelAdapter:
         self,
         samples: List[Dict[str, Any]],
         subset_S: Tuple[int, ...],
+        metric_name: str = "negative_cross_entropy",
         max_gen_len: int = 30
     ) -> float:
         """
         Returns the mean quality Q(S) over all samples in `samples`.
         """
-        scores = self.eval_subset_quality_per_example(samples, subset_S, max_gen_len=max_gen_len)
+        scores = self.eval_subset_quality_per_example(
+            samples, subset_S, metric_name=metric_name, max_gen_len=max_gen_len
+        )
         return float(np.mean(scores))

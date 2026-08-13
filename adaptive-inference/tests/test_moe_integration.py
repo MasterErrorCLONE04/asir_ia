@@ -62,11 +62,19 @@ class TestMoEIntegration(unittest.TestCase):
     def test_adapter_quality_evaluation(self):
         adapter = MoEModelAdapter(self.model, self.tokenizer, self.device)
         subset = (0, 1, 2, 3)
-        scores = adapter.eval_subset_quality_per_example(self.samples, subset, max_gen_len=10)
 
-        self.assertEqual(len(scores), 15)
-        self.assertTrue(isinstance(scores, np.ndarray))
-        for val in scores:
+        # Test default negative_cross_entropy metric
+        scores_nce = adapter.eval_subset_quality_per_example(self.samples, subset)
+        self.assertEqual(len(scores_nce), 15)
+        self.assertTrue(isinstance(scores_nce, np.ndarray))
+        for val in scores_nce:
+            self.assertTrue(val < 0.0)
+
+        # Test optional exact_match metric
+        scores_em = adapter.eval_subset_quality_per_example(self.samples, subset, metric_name="exact_match", max_gen_len=10)
+        self.assertEqual(len(scores_em), 15)
+        self.assertTrue(isinstance(scores_em, np.ndarray))
+        for val in scores_em:
             self.assertIn(val, [0.0, 1.0])
 
     def test_moe_profiler_selector_selection(self):

@@ -462,6 +462,7 @@ def main():
     parser.add_argument("--controlled", action="store_true", help="Enable Controlled MoE (Oracle masked routing).")
     parser.add_argument("--seed", type=int, default=42, help="Seed for training reproducibility.")
     parser.add_argument("--aux_coef", type=float, default=0.01, help="Coefficient for load-balancing loss.")
+    parser.add_argument("--max_steps", type=int, default=None, help="Maximum number of training steps.")
     
     args = parser.parse_args()
 
@@ -523,12 +524,15 @@ def main():
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
 
     print("Starting training...")
+    global_step = 0
     for epoch in range(1, args.epochs + 1):
         model.train()
         epoch_loss = 0.0
         epoch_task_loss = 0.0
         epoch_aux_loss = 0.0
         
+        should_stop = False
+        steps_in_epoch = 0
         for batch_idx, batch in enumerate(train_loader):
             input_ids = batch['input_ids'].to(device)
             labels = batch['labels'].to(device)
@@ -560,10 +564,17 @@ def main():
             epoch_loss += loss.item()
             epoch_task_loss += task_loss.item()
             epoch_aux_loss += aux_loss.item()
+            steps_in_epoch += 1
             
-        epoch_loss /= len(train_loader)
-        epoch_task_loss /= len(train_loader)
-        epoch_aux_loss /= len(train_loader)
+            global_step += 1
+            if args.max_steps is not None and global_step >= args.max_steps:
+                print(f"\nReached max steps limit: {global_step} steps. Stopping training.")
+                should_stop = True
+                break
+            
+        epoch_loss /= max(steps_in_epoch, 1)
+        epoch_task_loss /= max(steps_in_epoch, 1)
+        epoch_aux_loss /= max(steps_in_epoch, 1)
         
         # Validation evaluation
         val_loss, val_q, val_n_eff, val_eta_cap, _ = evaluate(model, val_loader, tokenizer, args.controlled, device)
@@ -572,6 +583,9 @@ def main():
               f"Train Loss: {epoch_loss:.4f} (Task: {epoch_task_loss:.4f}, Aux: {epoch_aux_loss:.4f}) | "
               f"Val Loss: {val_loss:.4f} | Val Quality Q (EM): {val_q:.2f}% | "
               f"N_eff: {val_n_eff:.2f} | η_cap: {val_eta_cap:.4f}")
+
+        if should_stop:
+            break
 
     print("Training finished.")
 

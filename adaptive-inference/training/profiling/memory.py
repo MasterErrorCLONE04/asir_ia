@@ -48,6 +48,7 @@ class MemoryProfiler:
         """
         total_params = sum(p.numel() for p in self.model.parameters())
         param_bytes = sum(p.numel() * p.element_size() for p in self.model.parameters())
+        param_dtypes = sorted(list(set(str(p.dtype) for p in self.model.parameters())))
         
         grad_bytes = sum(
             p.grad.numel() * p.grad.element_size()
@@ -69,6 +70,7 @@ class MemoryProfiler:
         result = {
             'total_params': total_params,
             'active_params': active_params_count if active_params_count is not None else total_params,
+            'param_dtypes': param_dtypes,
             'param_memory_gb': param_gb,
             'gradient_memory_gb': grad_gb,
             'optimizer_state_memory_gb': opt_gb,

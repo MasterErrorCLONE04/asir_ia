@@ -2,6 +2,15 @@ import time
 import torch
 from typing import Dict, Optional, Any
 
+_ACTIVE_TIMING_PROFILER: Optional['DispatchTimingProfiler'] = None
+
+def set_global_timing_profiler(profiler: Optional['DispatchTimingProfiler']) -> None:
+    global _ACTIVE_TIMING_PROFILER
+    _ACTIVE_TIMING_PROFILER = profiler
+
+def get_global_timing_profiler() -> Optional['DispatchTimingProfiler']:
+    return _ACTIVE_TIMING_PROFILER
+
 class DispatchTimingProfiler:
     """
     Timing Profiler for measuring execution latency of MoE routing,

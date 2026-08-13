@@ -339,14 +339,15 @@ def generate_autoregressive(model: MoETransformer, prompt_ids: List[int], sep_id
 
 
 def evaluate(model: MoETransformer, dataloader: DataLoader, tokenizer: CharTokenizer,
-             controlled: bool, device: torch.device) -> Tuple[float, float, float, float, Dict[str, Any]]:
+             controlled: bool, device: torch.device, em_samples: int = 0) -> Tuple[float, float, float, float, Dict[str, Any]]:
     """
-    Evaluates the model on cross-entropy loss, quality Q (exact-match),
-    and collects expert routing statistics (N_eff, η_cap).
+    Evaluates the model on cross-entropy loss (and Val NCE), optional quality Q (exact-match),
+    and collects expert routing statistics (N_eff, η_cap) in parallel batches.
     """
     model.eval()
     total_loss = 0.0
     correct_matches = 0
+    gen_samples = 0
     total_samples = 0
     
     # Routing statistics
@@ -364,60 +365,56 @@ def evaluate(model: MoETransformer, dataloader: DataLoader, tokenizer: CharToken
             domains = batch['domains']
             prompts = batch['prompts']
             targets = batch['targets']
+            batch_size = input_ids.size(0)
             
             # Domain mask for Controlled MoE
             batch_mask = None
             if controlled and model.moe:
-                # Retrieve mask matching this batch's domains
                 num_experts = model.blocks[0].ffn.num_experts
                 batch_mask = get_domain_mask_batch(domains, num_experts, device)
                 
-            # Forward pass
+            # Batched Parallel Forward Pass
             logits, all_router_logits = model(input_ids, batch_mask)
             
             # Loss calculation
             loss = autoregressive_cross_entropy_loss(logits, labels, tokenizer.pad_id)
-            total_loss += loss.item() * input_ids.size(0)
+            total_loss += loss.item() * batch_size
+            total_samples += batch_size
             
-            # Autoregressive generation for Quality Q evaluation
-            for i in range(input_ids.size(0)):
-                prompt_str = prompts[i]
-                target_str = targets[i]
-                domain = domains[i]
-                
-                # Setup specific single mask if controlled
-                single_mask = None
-                if controlled and model.moe:
-                    single_mask = get_domain_mask_batch([domain], num_experts, device)
+            # Optional Autoregressive generation for Quality Q (EM) evaluation
+            if em_samples > 0 and gen_samples < em_samples:
+                num_to_gen = min(batch_size, em_samples - gen_samples)
+                for i in range(num_to_gen):
+                    prompt_str = prompts[i]
+                    target_str = targets[i]
+                    domain = domains[i]
                     
-                prompt_encoded = tokenizer.encode(prompt_str, add_bos=True, add_eos=False)
-                gen_ids = generate_autoregressive(model, prompt_encoded, tokenizer.sep_id, tokenizer.eos_id, single_mask)
-                gen_str = tokenizer.decode(gen_ids, skip_special_tokens=True)
-                
-                # Exact-match comparison
-                if gen_str.strip() == target_str.strip():
-                    correct_matches += 1
-                total_samples += 1
+                    single_mask = None
+                    if controlled and model.moe:
+                        single_mask = get_domain_mask_batch([domain], num_experts, device)
+                        
+                    prompt_encoded = tokenizer.encode(prompt_str, add_bos=True, add_eos=False)
+                    gen_ids = generate_autoregressive(model, prompt_encoded, tokenizer.sep_id, tokenizer.eos_id, single_mask)
+                    gen_str = tokenizer.decode(gen_ids, skip_special_tokens=True)
+                    
+                    if gen_str.strip() == target_str.strip():
+                        correct_matches += 1
+                    gen_samples += 1
                 
             # Collect expert routing counts
             if model.moe and all_router_logits:
-                # Loop over MoE layers
                 for layer_idx, router_logits in enumerate(all_router_logits):
-                    # router_logits shape: (batch_size, seq_len, num_experts)
                     flat_logits = router_logits.view(-1, router_logits.size(-1))
-                    
-                    # For each token, find which expert was selected in top-k
                     top_k = model.blocks[0].ffn.top_k
-                    _, topk_indices = torch.topk(flat_logits, top_k, dim=-1) # (T, top_k)
+                    _, topk_indices = torch.topk(flat_logits, top_k, dim=-1)
                     
-                    # Add counts
                     expert_counts[layer_idx].scatter_add_(
                         0, topk_indices.view(-1), torch.ones(flat_logits.size(0) * top_k, device=device)
                     )
                     
     # Metrics
-    avg_loss = total_loss / total_samples
-    quality_q = (correct_matches / total_samples) * 100.0 # percentage
+    avg_loss = total_loss / max(total_samples, 1)
+    quality_q = (correct_matches / max(gen_samples, 1)) * 100.0 if gen_samples > 0 else 0.0
     
     # Calculate N_eff, η_cap per layer
     routing_stats = {}
@@ -463,6 +460,7 @@ def main():
     parser.add_argument("--seed", type=int, default=42, help="Seed for training reproducibility.")
     parser.add_argument("--aux_coef", type=float, default=0.01, help="Coefficient for load-balancing loss.")
     parser.add_argument("--max_steps", type=int, default=None, help="Maximum number of training steps.")
+    parser.add_argument("--em_samples", type=int, default=0, help="Number of validation samples for Exact Match evaluation (0 to disable).")
     
     args = parser.parse_args()
 
@@ -577,11 +575,13 @@ def main():
         epoch_aux_loss /= max(steps_in_epoch, 1)
         
         # Validation evaluation
-        val_loss, val_q, val_n_eff, val_eta_cap, _ = evaluate(model, val_loader, tokenizer, args.controlled, device)
+        val_loss, val_q, val_n_eff, val_eta_cap, _ = evaluate(model, val_loader, tokenizer, args.controlled, device, em_samples=args.em_samples)
         
+        val_nce = -val_loss
+        q_str = f"Val Quality Q (EM): {val_q:.2f}% | " if args.em_samples > 0 else ""
         print(f"Epoch {epoch}/{args.epochs}: "
               f"Train Loss: {epoch_loss:.4f} (Task: {epoch_task_loss:.4f}, Aux: {epoch_aux_loss:.4f}) | "
-              f"Val Loss: {val_loss:.4f} | Val Quality Q (EM): {val_q:.2f}% | "
+              f"Val Loss: {val_loss:.4f} (Val NCE: {val_nce:.4f}) | {q_str}"
               f"N_eff: {val_n_eff:.2f} | η_cap: {val_eta_cap:.4f}")
 
         if should_stop:

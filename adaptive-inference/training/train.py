@@ -373,11 +373,16 @@ def evaluate(model: MoETransformer, dataloader: DataLoader, tokenizer: CharToken
                 num_experts = model.blocks[0].ffn.num_experts
                 batch_mask = get_domain_mask_batch(domains, num_experts, device)
                 
-            # Batched Parallel Forward Pass
-            logits, all_router_logits = model(input_ids, batch_mask)
-            
-            # Loss calculation
-            loss = autoregressive_cross_entropy_loss(logits, labels, tokenizer.pad_id)
+            # Batched Parallel Forward Pass with AMP
+            use_amp = (device.type == 'cuda')
+            if hasattr(torch, "amp") and hasattr(torch.amp, "autocast"):
+                amp_ctx = torch.amp.autocast('cuda', enabled=use_amp)
+            else:
+                amp_ctx = torch.cuda.amp.autocast(enabled=use_amp)
+                
+            with amp_ctx:
+                logits, all_router_logits = model(input_ids, batch_mask)
+                loss = autoregressive_cross_entropy_loss(logits, labels, tokenizer.pad_id)
             total_loss += loss.item() * batch_size
             total_samples += batch_size
             
@@ -454,7 +459,7 @@ def main():
     parser = argparse.ArgumentParser(description="Train and evaluate adaptive sparse models.")
     parser.add_argument("--model", type=str, default="M1", help="Model name (M0-M5, C1-C4).")
     parser.add_argument("--epochs", type=int, default=5, help="Number of training epochs.")
-    parser.add_argument("--batch_size", type=int, default=32, help="Batch size for training.")
+    parser.add_argument("--batch_size", type=int, default=16, help="Batch size for training.")
     parser.add_argument("--lr", type=float, default=5e-4, help="Learning rate.")
     parser.add_argument("--controlled", action="store_true", help="Enable Controlled MoE (Oracle masked routing).")
     parser.add_argument("--seed", type=int, default=42, help="Seed for training reproducibility.")
@@ -521,6 +526,15 @@ def main():
     # Optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
 
+    # AMP GradScaler setup
+    use_amp = (device.type == 'cuda')
+    if hasattr(torch, "amp") and hasattr(torch.amp, "GradScaler"):
+        scaler = torch.amp.GradScaler('cuda') if use_amp else None
+        amp_ctx_func = lambda: torch.amp.autocast('cuda', enabled=use_amp)
+    else:
+        scaler = torch.cuda.amp.GradScaler() if use_amp else None
+        amp_ctx_func = lambda: torch.cuda.amp.autocast(enabled=use_amp)
+
     print("Starting training...")
     global_step = 0
     for epoch in range(1, args.epochs + 1):
@@ -542,22 +556,22 @@ def main():
                 num_experts = model.blocks[0].ffn.num_experts
                 batch_mask = get_domain_mask_batch(domains, num_experts, device)
                 
-            # Forward pass
-            logits, all_router_logits = model(input_ids, batch_mask)
+            # Forward pass with AMP FP16
+            with amp_ctx_func():
+                logits, all_router_logits = model(input_ids, batch_mask)
+                task_loss = autoregressive_cross_entropy_loss(logits, labels, tokenizer.pad_id)
+                aux_loss = load_balancing_loss(all_router_logits, config['top_k'])
+                loss = task_loss + args.aux_coef * aux_loss
             
-            # Task loss
-            task_loss = autoregressive_cross_entropy_loss(logits, labels, tokenizer.pad_id)
-            
-            # Load-balancing loss (for uncontrolled training in later phases)
-            aux_loss = load_balancing_loss(all_router_logits, config['top_k'])
-            
-            # Combined loss
-            loss = task_loss + args.aux_coef * aux_loss
-            
-            # Backward pass
+            # Backward pass with scaler
             optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+            if scaler is not None:
+                scaler.scale(loss).backward()
+                scaler.step(optimizer)
+                scaler.update()
+            else:
+                loss.backward()
+                optimizer.step()
             
             epoch_loss += loss.item()
             epoch_task_loss += task_loss.item()

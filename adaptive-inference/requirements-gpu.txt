@@ -1,0 +1,8 @@
+# GPU Training & Profiling Dependencies
+# Inherits from base requirements.txt (PyTorch, numpy, pytest, etc.)
+-r requirements.txt
+
+# Additional GPU / Profiling tools (pinned/minimum versions for CUDA stability)
+torch>=2.0.0
+triton>=2.0.0; sys_platform == 'linux'
+psutil>=5.9.0

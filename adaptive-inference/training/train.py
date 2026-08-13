@@ -14,6 +14,8 @@ from tasks.tokenizer import CharTokenizer
 from training.models.transformer import MoETransformer
 from training.router.oracle import get_domain_mask_batch
 from training.losses.losses import autoregressive_cross_entropy_loss, load_balancing_loss
+from training.profiling import MemoryProfiler, DispatchTimingProfiler
+
 
 class SyntheticDataset(Dataset):
     """
@@ -466,16 +468,42 @@ def main():
     parser.add_argument("--aux_coef", type=float, default=0.01, help="Coefficient for load-balancing loss.")
     parser.add_argument("--max_steps", type=int, default=None, help="Maximum number of training steps.")
     parser.add_argument("--em_samples", type=int, default=0, help="Number of validation samples for Exact Match evaluation (0 to disable).")
-    
+    parser.add_argument("--device", type=str, default="auto", choices=["auto", "cpu", "cuda"], help="Device to use for training (auto, cpu, cuda).")
+    parser.add_argument("--precision", type=str, default="fp32", choices=["fp32", "bf16"], help="Computation precision (fp32, bf16).")
+    parser.add_argument("--profile", action="store_true", help="Enable detailed memory and timing profiling.")
+    parser.add_argument("--save_profile", action="store_true", help="Save profiling results to baseline.json.")
+
     args = parser.parse_args()
 
     # Reproducibility
     torch.manual_seed(args.seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(args.seed)
+
+    # Device Resolution
+    if args.device == "cuda":
+        if not torch.cuda.is_available():
+            raise RuntimeError("ERROR: CUDA requested but torch.cuda.is_available() == False")
+        device = torch.device('cuda')
+    elif args.device == "cpu":
+        device = torch.device('cpu')
+    else:
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"Using device: {device}")
+    print(f"Using device: {device} (requested: {args.device}) | Precision: {args.precision.upper()}")
+
+    # Precision setup
+    if args.precision == "bf16":
+        if device.type != 'cuda':
+            raise ValueError("BF16 precision is only supported on CUDA device.")
+        if hasattr(torch, "amp") and hasattr(torch.amp, "autocast"):
+            amp_ctx_func = lambda: torch.amp.autocast('cuda', dtype=torch.bfloat16)
+        else:
+            amp_ctx_func = lambda: torch.cuda.amp.autocast(dtype=torch.bfloat16)
+        scaler = None
+    else: # fp32
+        amp_ctx_func = lambda: torch.amp.autocast('cuda', enabled=False) if hasattr(torch, "amp") else torch.cuda.amp.autocast(enabled=False)
+        scaler = None
 
     # Initialize Tokenizer
     tokenizer = CharTokenizer()
@@ -526,14 +554,10 @@ def main():
     # Optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
 
-    # AMP GradScaler setup
-    use_amp = (device.type == 'cuda')
-    if hasattr(torch, "amp") and hasattr(torch.amp, "GradScaler"):
-        scaler = torch.amp.GradScaler('cuda') if use_amp else None
-        amp_ctx_func = lambda: torch.amp.autocast('cuda', enabled=use_amp)
-    else:
-        scaler = torch.cuda.amp.GradScaler() if use_amp else None
-        amp_ctx_func = lambda: torch.cuda.amp.autocast(enabled=use_amp)
+    # Profilers
+    do_profile = args.profile or args.save_profile
+    mem_profiler = MemoryProfiler(model, optimizer, device) if do_profile else None
+    time_profiler = DispatchTimingProfiler(device) if do_profile else None
 
     print("Starting training...")
     global_step = 0
@@ -546,6 +570,11 @@ def main():
         should_stop = False
         steps_in_epoch = 0
         for batch_idx, batch in enumerate(train_loader):
+            if do_profile:
+                mem_profiler.reset_cuda_peak_stats()
+                mem_profiler.profile_checkpoint("STEP_START")
+                time_profiler.start("total_step")
+
             input_ids = batch['input_ids'].to(device)
             labels = batch['labels'].to(device)
             domains = batch['domains']
@@ -556,22 +585,39 @@ def main():
                 num_experts = model.blocks[0].ffn.num_experts
                 batch_mask = get_domain_mask_batch(domains, num_experts, device)
                 
-            # Forward pass with AMP FP16
+            # Forward pass
             with amp_ctx_func():
                 logits, all_router_logits = model(input_ids, batch_mask)
                 task_loss = autoregressive_cross_entropy_loss(logits, labels, tokenizer.pad_id)
                 aux_loss = load_balancing_loss(all_router_logits, config['top_k'])
                 loss = task_loss + args.aux_coef * aux_loss
+
+            if do_profile:
+                mem_profiler.profile_checkpoint("POST_FORWARD")
             
-            # Backward pass with scaler
+            # Backward pass
             optimizer.zero_grad()
             if scaler is not None:
                 scaler.scale(loss).backward()
+                if do_profile:
+                    mem_profiler.profile_checkpoint("POST_BACKWARD")
+                    mem_profiler.profile_checkpoint("BEFORE_OPTIMIZER_STEP")
                 scaler.step(optimizer)
+                if do_profile:
+                    mem_profiler.profile_checkpoint("AFTER_OPTIMIZER_STEP")
                 scaler.update()
             else:
                 loss.backward()
+                if do_profile:
+                    mem_profiler.profile_checkpoint("POST_BACKWARD")
+                    mem_profiler.profile_checkpoint("BEFORE_OPTIMIZER_STEP")
                 optimizer.step()
+                if do_profile:
+                    mem_profiler.profile_checkpoint("AFTER_OPTIMIZER_STEP")
+
+            if do_profile:
+                time_profiler.stop("total_step")
+                mem_profiler.profile_checkpoint("STEP_END")
             
             epoch_loss += loss.item()
             epoch_task_loss += task_loss.item()
@@ -601,6 +647,27 @@ def main():
         if should_stop:
             break
 
+    # Report & Save Profile if enabled
+    if do_profile and mem_profiler and time_profiler:
+        print("\n" + mem_profiler.format_report(args.model, args.precision, active_params_count=counts['A']))
+        print("\n" + time_profiler.format_report(args.model))
+
+        if args.save_profile:
+            out_dir = os.path.join(script_dir, "..", "results", "profiling", args.model, args.precision)
+            os.makedirs(out_dir, exist_ok=True)
+            out_path = os.path.join(out_dir, "baseline.json")
+            profile_data = {
+                'model': args.model,
+                'device': str(device),
+                'precision': args.precision,
+                'counts': counts,
+                'memory': mem_profiler.get_breakdown(active_params_count=counts['A']),
+                'timing': time_profiler.get_summary()
+            }
+            with open(out_path, 'w', encoding='utf-8') as f:
+                json.dump(profile_data, f, indent=2)
+            print(f"Profile baseline saved to: {out_path}")
+
     # Save checkpoint at the end of training
     checkpoint_dir = os.path.join(script_dir, "..", "checkpoints", args.model)
     os.makedirs(checkpoint_dir, exist_ok=True)
@@ -612,3 +679,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

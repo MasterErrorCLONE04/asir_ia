@@ -587,6 +587,13 @@ def main():
         if should_stop:
             break
 
+    # Save checkpoint at the end of training
+    checkpoint_dir = os.path.join(script_dir, "..", "checkpoints", args.model)
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    checkpoint_path = os.path.join(checkpoint_dir, "model.pt")
+    torch.save(model.state_dict(), checkpoint_path)
+    print(f"Model checkpoint saved successfully to: {checkpoint_path}")
+
     print("Training finished.")
 
 if __name__ == "__main__":

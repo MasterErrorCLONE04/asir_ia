@@ -16,6 +16,7 @@ from analysis.random_reference import sample_random_reference_subsets
 from analysis.evaluator import compute_paired_bootstrap_metrics
 from analysis.artifacts import save_artifact_snapshot
 from tasks.generator import SyntheticTaskGenerator
+from training.train import count_active_params, get_model_config
 
 try:
     import torch
@@ -177,6 +178,51 @@ class TestR13RealMoESmoke(unittest.TestCase):
 
         self.assertEqual(s_selector_a, s_selector_b)
         self.assertEqual(len(s_selector_a), 3)
+
+    def test_canonical_models_active_params_target(self):
+        """Validates that M1 and M2 model architectures achieve exactly ~140M active parameters."""
+        tokenizer = CharTokenizer()
+        device = torch.device("cpu")
+
+        # Test M1 active parameter count
+        m1_cfg = get_model_config("M1")
+        m1_model = MoETransformer(
+            vocab_size=tokenizer.vocab_size,
+            d_model=m1_cfg["d_model"],
+            n_layers=m1_cfg["n_layers"],
+            num_heads=8,
+            d_ff=m1_cfg["d_ff"],
+            max_seq_len=m1_cfg["max_seq_len"],
+            moe=m1_cfg["moe"],
+            num_experts=m1_cfg["num_experts"],
+            top_k=m1_cfg["top_k"]
+        ).to(device)
+        m1_params = count_active_params(m1_model)
+        m1_active = m1_params["A"]
+
+        # Verify within 0.1% of 140,000,000
+        m1_error = abs(m1_active - 140000000) / 140000000
+        self.assertLess(m1_error, 0.001, f"M1 active params error is too high: {m1_error:.6f} ({m1_active} params)")
+
+        # Test M2 active parameter count
+        m2_cfg = get_model_config("M2")
+        m2_model = MoETransformer(
+            vocab_size=tokenizer.vocab_size,
+            d_model=m2_cfg["d_model"],
+            n_layers=m2_cfg["n_layers"],
+            num_heads=8,
+            d_ff=m2_cfg["d_ff"],
+            max_seq_len=m2_cfg["max_seq_len"],
+            moe=m2_cfg["moe"],
+            num_experts=m2_cfg["num_experts"],
+            top_k=m2_cfg["top_k"]
+        ).to(device)
+        m2_params = count_active_params(m2_model)
+        m2_active = m2_params["A"]
+
+        # Verify within 0.1% of 140,000,000
+        m2_error = abs(m2_active - 140000000) / 140000000
+        self.assertLess(m2_error, 0.001, f"M2 active params error is too high: {m2_error:.6f} ({m2_active} params)")
 
 
 if __name__ == "__main__":

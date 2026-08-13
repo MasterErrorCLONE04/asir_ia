@@ -139,11 +139,11 @@ def main():
             print(f"Initializing MoETransformer model {args.model} (untrained) on device {device}...")
             model = MoETransformer(
                 vocab_size=tokenizer.vocab_size,
-                d_model=64 if args.cpu_smoke_test else 1408,
-                n_layers=2 if args.cpu_smoke_test else 5,
+                d_model=64 if args.cpu_smoke_test else model_cfg["d_model"],
+                n_layers=2 if args.cpu_smoke_test else model_cfg["n_layers"],
                 num_heads=2 if args.cpu_smoke_test else 8,
-                d_ff=128 if args.cpu_smoke_test else 512,
-                max_seq_len=128 if args.cpu_smoke_test else 256,
+                d_ff=128 if args.cpu_smoke_test else model_cfg["d_ff"],
+                max_seq_len=128 if args.cpu_smoke_test else model_cfg["max_seq_len"],
                 moe=model_cfg["moe"],
                 num_experts=pool_size,
                 top_k=model_cfg["top_k"]

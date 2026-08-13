@@ -42,11 +42,11 @@ def load_moe_model_from_checkpoint(
 
     model = MoETransformer(
         vocab_size=tokenizer.vocab_size,
-        d_model=1408,
-        n_layers=5,
+        d_model=model_cfg["d_model"],
+        n_layers=model_cfg["n_layers"],
         num_heads=8,
-        d_ff=512,
-        max_seq_len=256,
+        d_ff=model_cfg["d_ff"],
+        max_seq_len=model_cfg["max_seq_len"],
         moe=model_cfg["moe"],
         num_experts=model_cfg["num_experts"],
         top_k=model_cfg["top_k"]

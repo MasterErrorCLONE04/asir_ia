@@ -12,6 +12,7 @@ import torch
 import torch.nn as nn
 from abc import ABC, abstractmethod
 from typing import Dict, Tuple, List, Set, Optional, Any
+from concurrent.futures import ThreadPoolExecutor
 
 
 class BaseExpertStore(ABC):
@@ -99,19 +100,24 @@ class NVMeExpertStore(BaseExpertStore):
     Disk-backed Expert Storage tier (NVMe / SSD persistence & streaming).
     Stores expert weights on physical disk and measures physical I/O transfer latency
     and exact byte volume when loading weights into RAM upon cache miss.
+    Supports asynchronous thread pool loading.
     """
 
-    def __init__(self, storage_dir: str, ram_store: RAMExpertStore, nvme_bw_gbps: float = 5.0):
+    def __init__(self, storage_dir: str, ram_store: RAMExpertStore, nvme_bw_gbps: float = 5.0, max_workers: int = 4):
         self.storage_dir = storage_dir
         self.ram_store = ram_store
         self.nvme_bw_mb_per_ms = (nvme_bw_gbps * 1000.0) / 1000.0  # 5 GB/s = 5 MB/ms
         os.makedirs(storage_dir, exist_ok=True)
         
-        # Dedicated CUDA stream for async I/O transfers
+        # Dedicated CUDA stream for async I/O transfers (retained for backward compatibility / metrics)
         self.io_stream = torch.cuda.Stream() if torch.cuda.is_available() else None
         
         # Disk registry: (layer_id, expert_id) -> (filepath, size_bytes)
         self.disk_registry: Dict[Tuple[int, int], Tuple[str, int]] = {}
+        
+        # Background Worker Pool & active prefetch futures
+        self.executor = ThreadPoolExecutor(max_workers=max_workers)
+        self.active_futures: Dict[Tuple[int, int], Any] = {}
         
         # Physical Telemetry Counters
         self.total_bytes_read = 0
@@ -129,14 +135,9 @@ class NVMeExpertStore(BaseExpertStore):
         size_bytes = sum(t.numel() * t.element_size() for t in state_dict.values())
         self.disk_registry[key] = (filepath, size_bytes)
 
-    def get(self, layer_id: int, expert_id: int) -> Dict[str, torch.Tensor]:
+    def _load_expert(self, layer_id: int, expert_id: int) -> Dict[str, torch.Tensor]:
+        """Runs on background thread to execute physical disk read."""
         key = (layer_id, expert_id)
-        
-        # Check if already resident in RAM
-        if self.ram_store.is_resident(layer_id, expert_id):
-            return self.ram_store.get(layer_id, expert_id)
-            
-        # Cache Miss: Fetch from NVMe into RAM
         if key not in self.disk_registry:
             raise KeyError(f"Expert (layer={layer_id}, expert={expert_id}) not found on NVMe store.")
             
@@ -144,17 +145,9 @@ class NVMeExpertStore(BaseExpertStore):
         size_mb = size_bytes / (1024 * 1024)
         
         start_time = time.perf_counter()
-        
-        # Optional CUDA async stream context for weight loading
-        if self.io_stream is not None:
-            with torch.cuda.stream(self.io_stream):
-                state_dict = torch.load(filepath, map_location='cpu')
-        else:
-            state_dict = torch.load(filepath, map_location='cpu')
-            
+        state_dict = torch.load(filepath, map_location='cpu')
         elapsed_ms = (time.perf_counter() - start_time) * 1000.0
         
-        # Physical/simulated NVMe bandwidth minimum bounds
         min_expected_ms = size_mb / self.nvme_bw_mb_per_ms
         simulated_io_ms = max(elapsed_ms, min_expected_ms)
         
@@ -163,16 +156,41 @@ class NVMeExpertStore(BaseExpertStore):
         self.total_read_time_ms += simulated_io_ms
         self.total_miss_count += 1
         
-        # Put into RAM store
+        return state_dict
+
+    def get(self, layer_id: int, expert_id: int) -> Dict[str, torch.Tensor]:
+        key = (layer_id, expert_id)
+        
+        # Check if already resident in RAM
+        if self.ram_store.is_resident(layer_id, expert_id):
+            return self.ram_store.get(layer_id, expert_id)
+            
+        # Check if there is an active prefetch future
+        if key in self.active_futures:
+            future = self.active_futures.pop(key)
+            state_dict = future.result()
+            self.ram_store.put(layer_id, expert_id, state_dict)
+            return self.ram_store.get(layer_id, expert_id)
+            
+        # Cache Miss: Synchronous Fetch
+        state_dict = self._load_expert(layer_id, expert_id)
         self.ram_store.put(layer_id, expert_id, state_dict)
         return self.ram_store.get(layer_id, expert_id)
 
-    def prefetch(self, layer_id: int, expert_ids: List[int]) -> None:
+    def prefetch(self, layer_id: int, expert_ids: List[int]) -> Dict[Tuple[int, int], Any]:
+        """Asynchronously submits expert reads to the thread pool executor."""
+        futures = {}
         for e_id in expert_ids:
-            if not self.ram_store.is_resident(layer_id, e_id):
-                self.get(layer_id, e_id)
+            key = (layer_id, e_id)
+            if not self.ram_store.is_resident(layer_id, e_id) and key not in self.active_futures:
+                future = self.executor.submit(self._load_expert, layer_id, e_id)
+                self.active_futures[key] = future
+                futures[key] = future
+        return futures
 
     def evict(self, layer_id: int, expert_id: int) -> None:
+        key = (layer_id, expert_id)
+        self.active_futures.pop(key, None)
         self.ram_store.evict(layer_id, expert_id)
 
     def is_resident(self, layer_id: int, expert_id: int) -> bool:
@@ -182,3 +200,6 @@ class NVMeExpertStore(BaseExpertStore):
         self.total_bytes_read = 0
         self.total_read_time_ms = 0.0
         self.total_miss_count = 0
+
+    def shutdown(self) -> None:
+        self.executor.shutdown(wait=False)

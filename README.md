@@ -6,10 +6,11 @@
 
 ## Executive Summary
 
-- **Problem**: Training a 1.626 Billion parameter MoE model (M2, 140M active parameters per token) in FP32 with standard AdamW requires **~24.66 GB VRAM** (Weights: 6.06 GB, Gradients: 6.06 GB, Optimizer States: 12.12 GB), causing Out-Of-Memory (OOM) failures on consumer hardware.
-- **Memory Solution (ASIR-TR-1)**: Selective `bf16-storage` precision (preserving LayerNorm, Embeddings, and Router in FP32 for numerical stability) combined with `bitsandbytes` 8-bit AdamW (`adam8bit`) reduces peak VRAM allocation to **7.01 GB**, fitting M2 comfortably within 12 GB VRAM.
-- **Compute Solution (ASIR-TR-6.1)**: `BatchedMoEDispatcher` implements **Grouped Expert GEMM** execution. Using GPU token packing (`torch.argsort`) and stacked weight parameters, it executes all experts in a single batch via `torch.bmm`. This eliminates the sequential python loop over experts, reducing expert CUDA kernel launch overhead by **>93%** (down to $O(K)$ launches per step) while preserving exact bit-level forward/backward numerical equivalence.
-- **Runtime Residency Solution (ASIR-TR-8.1)**: `ResidencyManager` implements a multi-tier memory subsystem (VRAM / RAM) with active **Lease ownership** to prevent eviction of experts during active execution. Empirical evaluation shows that classical eviction policies like **LRU collapse completely (0% hit rate)** due to cyclic multi-layer MoE execution patterns, whereas frequency-aware policies (**LFU/LFRU**) maintain stable hit rates of **~17-19%** at capacity bounds.
+- **Problem**: Training a 1.626 Billion parameter MoE model (M2, 140M active parameters per token) in FP32 with standard AdamW requires **~24.66 GB VRAM**, causing Out-Of-Memory (OOM) failures.
+- **Memory Solution (ASIR-TR-1)**: Selective `bf16-storage` precision combined with `bitsandbytes` 8-bit AdamW (`adam8bit`) reduces peak VRAM allocation to **7.01 GB**.
+- **Compute Solution (ASIR-TR-6.1)**: `BatchedMoEDispatcher` implements **Grouped Expert GEMM** execution. Using GPU token packing (`torch.argsort`) and stacked weights, it runs all experts in a single batch via `torch.bmm`, reducing CUDA expert kernel launch overhead by **>93%**.
+- **Residency Management (ASIR-TR-8.1)**: `ResidencyManager` implements a multi-tier memory subsystem (VRAM / RAM) with active **Lease ownership** to prevent expert eviction during execution. LRU is shown to **collapse completely (0% hit rate)** under layer-cycling MoE access, while FFU/LFRU reach stable hit rates of ~17-19%.
+- **Async Prefetch Path (ASIR-TR-8.2)**: `ThreadPoolExecutor` and `Future` abstractions enable background non-blocking disk reads, yielding **+91.7% throughput speedup** for **Top-2** transition prefetching (**30.83 tok/s**, reaching **96.2% of the Oracle Upper Bound** of 32.03 tok/s). Prefetch buffer isolation (`prefetch_cache`) prevents eviction thrashing.
 
 ---
 
@@ -23,16 +24,15 @@
   Memory Subsystem                                       Compute Subsystem
   (runtime/ & training/memory/)                           (training/moe/)
   ├── residency.py (VRAM/RAM Lease Manager)             ├── reference.py  (Oracle baseline)
-  ├── manager.py   (bf16-storage conversion)             ├── dispatcher.py (Sparse MoE)
-  └── checkpoint.py (Activation checkpointing)          └── batched_dispatcher.py (Grouped GEMM)
+  ├── expert_cache.py (Aisolated Prefetch Cache)        ├── dispatcher.py (Sparse MoE)
+  ├── expert_store.py (Async ThreadPoolExecutor)        └── batched_dispatcher.py (Grouped GEMM)
 ```
 
 ### Key Modules
 
-- **[`runtime/residency.py`](file:///c:/Users/Usuario/asir_ia/adaptive-inference/runtime/residency.py)**: `ResidencyManager` manages expert metadata (`ExpertRecord`), lifecycle states (`RAM_RESIDENT`, `VRAM_LEASED`, `VRAM_RESIDENT`), lease references, and enforces eviction policies (`LRU`, `LFU`, `LFRU`).
-- **[`training/moe/batched_dispatcher.py`](file:///c:/Users/Usuario/asir_ia/adaptive-inference/training/moe/batched_dispatcher.py)**: `BatchedMoEDispatcher` packs tokens into a 3D tensor and runs all active experts in a single grouped GEMM operation via `torch.bmm`.
-- **[`training/memory/manager.py`](file:///c:/Users/Usuario/asir_ia/adaptive-inference/training/memory/manager.py)**: `MemoryManager` performs selective precision conversion. Expert weights are stored in `bfloat16`, while sensitive layers remain in `float32`.
-- **[`training/optim/factory.py`](file:///c:/Users/Usuario/asir_ia/adaptive-inference/training/optim/factory.py)**: quantizes optimizer states to 8-bit using `bitsandbytes`.
+- **[`runtime/expert_store.py`](file:///c:/Users/Usuario/asir_ia/adaptive-inference/runtime/expert_store.py)**: `NVMeExpertStore` implements background non-blocking loading of expert weights via a `ThreadPoolExecutor`, yielding `Future` weights immediately.
+- **[`runtime/expert_cache.py`](file:///c:/Users/Usuario/asir_ia/adaptive-inference/runtime/expert_cache.py)**: `ExpertCache` contains an isolated speculative buffer `prefetch_cache` to store background futures, preventing eviction thrashing of the main LRU active cache.
+- **[`runtime/residency.py`](file:///c:/Users/Usuario/asir_ia/adaptive-inference/runtime/residency.py)**: `ResidencyManager` manages VRAM residency states and lease allocations.
 
 ---
 
@@ -41,28 +41,21 @@
 | Milestone | Objective | Key Findings & Results | Status |
 | :--- | :--- | :--- | :---: |
 | **ASIR-TR-1** | VRAM Memory Reduction | selective `bf16-storage` + `adam8bit` = **7.01 GB Peak VRAM** (RTX 3060 12GB compatible). | ✅ PASS |
-| **ASIR-TR-3** | Sparse MoE Dispatcher | `SparseMoEDispatcher` evaluated active experts only. Latency reduced from 258.02 ms to 189.81 ms. | ✅ PASS |
-| **ASIR-TR-4** | CUDA Overhead Decomposition | Diagnosed 320 expert kernel launches per step. GPU compute utilization was **0.19%** due to CPU launch overhead. | ✅ PASS |
-| **ASIR-TR-5** | Causality Analysis | PyTorch Profiler proved CPU launch time > GPU execution. Batched token scaling yielded 28x TFLOPS jump. | ✅ PASS |
-| **ASIR-TR-6** | Batched Expert Execution | Avoided explicit combine phase. Reduced step latency to **164.94 ms/step**. | ✅ PASS |
 | **ASIR-TR-6.1**| Grouped GEMM Engine | Stacked expert parameters. Replaced sequential loop with single `torch.bmm`, reducing expert launches by **>93%**. | ✅ PASS |
 | **ASIR-TR-8.1**| Residency & Lease Manager | VRAM/RAM tiering with Lease ownership. Proved **LRU fails completely (0% hit rate)** under cycling layers; **LFU/LFRU** achieved ~19% hit rate. | ✅ PASS |
+| **ASIR-TR-8.2**| Async Prefetch Engine | Background thread execution and double buffering solapado. Reached **30.83 tok/s** for **Top-2** prediction (96.2% of Oracle Upper Bound). | ✅ PASS |
 
 ---
 
-## Summary of Empirical Residency Metrics (TR-8.1)
+## Summary of Empirical Prefetch Metrics (TR-8.2)
 
-### VRAM Capacity Sweep (LFRU Policy, 100 steps)
-- **Capacity 4**: Hit Rate: **7.10%**, H2D Transfer: **58.7 MB**
-- **Capacity 8**: Hit Rate: **17.40%**, H2D Transfer: **52.2 MB**
-- **Capacity 16**: Hit Rate: **27.80%**, H2D Transfer: **45.7 MB**
-- **Capacity 24**: Hit Rate: **36.50%**, H2D Transfer: **40.2 MB**
-- **Capacity 32**: Hit Rate: **43.60%**, H2D Transfer: **35.7 MB**
+Evaluated under 30 token decode generation steps (capacity = 4 experts/layer):
 
-### Eviction Policy Comparison (Capacity = 8)
-- **LRU** *(Least Recently Used)*: **0.00% Hit Rate** (Complete collapse due to layer sequence cycle eviction).
-- **LFU** *(Least Frequently Used)*: **19.20% Hit Rate**.
-- **LFRU** *(Hybrid Heat Score)*: **17.40% Hit Rate**.
+- **No Prefetch**: Throughput: **16.08 tok/s**, Hit Rate: **69.86%**
+- **Async Prefetch (Top-1)**: Throughput: **26.31 tok/s**, Hit Rate: **78.45%**, Precision: **91.04%**, Recall: **8.59%**
+- **Async Prefetch (Top-2)**: Throughput: **30.83 tok/s**, Hit Rate: **80.56%**, Precision: **91.57%**, Recall: **10.70%** (Optimal)
+- **Async Prefetch (Top-4)**: Throughput: **30.60 tok/s**, Hit Rate: **81.69%**, Precision: **92.31%**, Recall: **11.83%**
+- **Oracle Prefetch** *(Techo)*: Throughput: **32.03 tok/s**, Hit Rate: **82.11%**, Precision: **100.00%**, Recall: **12.54%**
 
 ---
 
@@ -74,21 +67,19 @@
 ├── README.md                        # Project documentation
 ├── adaptive-inference/
 │   ├── experiments/
-│   │   ├── benchmark_tr6_batched.py   # TR-6 3-way benchmark
-│   │   └── benchmark_tr8_residency.py # TR-8.1 residency & capacity sweeps
+│   │   ├── benchmark_tr8_residency.py # TR-8.1 residency & capacity sweeps
+│   │   ├── benchmark_tr82_prefetch.py # TR-8.2 prefetch sweeps & oracle comparisons
+│   │   └── measure_prefetch_overhead.py # Micro-benchmark for async read overheads
 │   ├── runtime/
-│   │   └── residency.py             # ResidencyManager & Lease contracts
+│   │   ├── residency.py             # ResidencyManager & Lease contracts
+│   │   ├── expert_cache.py          # Isolated prefetch cache
+│   │   └── expert_store.py          # Background ThreadPoolExecutor store
 │   ├── tests/
-│   │   ├── test_batched_dispatcher.py # Batched dispatcher correctness tests
-│   │   └── test_residency.py        # ResidencyManager & Lease unit tests
+│   │   ├── test_residency.py        # ResidencyManager & Lease unit tests
+│   │   └── test_prefetch_async.py   # Prefetch engine async unit tests
 │   └── training/
 │       ├── memory/                  # Precision & activation checkpointing
 │       └── moe/                     # Reference, Sparse, and Batched MoE layers
-└── results/
-    └── profiling/
-        └── M2/                      # Milestone JSON profiling outputs
-            ├── asir_tr6_batched.json
-            └── asir_tr8_residency.json
 ```
 
 ---
@@ -107,16 +98,18 @@ pip install -r requirements-gpu.txt
 ### 2. Running Unit Tests
 
 ```bash
-# Run dispatcher correctness & residency lease tests
-.venv/bin/python -m unittest tests/test_batched_dispatcher.py
-.venv/bin/python -m unittest tests/test_residency.py
+# Run all unit tests
+.venv/bin/python -m unittest discover tests/
 ```
 
-### 3. Running Residency Benchmarks
+### 3. Running Async Prefetch Benchmarks
 
 ```bash
-# Sweeps capacity bounds and compares eviction policies (LRU/LFU/LFRU)
-.venv/bin/python experiments/benchmark_tr8_residency.py
+# Evaluates Top-K and Oracle policies
+.venv/bin/python experiments/benchmark_tr82_prefetch.py
+
+# Measures disk load vs async overlap overhead
+.venv/bin/python experiments/measure_prefetch_overhead.py
 ```
 
 ---

@@ -1,5 +1,5 @@
 """
-runtime/engine.py — ASIR MoE Inference Runtime Engine
+runtime/engine.py — ASIR MoE Inference Runtime Engine (TR-10)
 
 Coordinates the two-phase local inference execution:
 1. Prefill Phase: Batched prompt processing.
@@ -108,6 +108,11 @@ class InferenceEngine:
             next_token = torch.argmax(logits[0, -1, :]).item()
             
         self.metrics.end_decode()
+        
+        # Sync NVMe stats from expert cache into metrics tracker
+        if self.expert_cache is not None:
+            cache_stats = self.expert_cache.get_stats()
+            self.metrics.record_nvme_read(cache_stats['nvme_bytes_read'], cache_stats['nvme_io_time_ms'])
         
         # Combine telemetry
         generated_text = self.tokenizer.decode(generated_ids, skip_special_tokens=True)

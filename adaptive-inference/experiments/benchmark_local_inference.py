@@ -1,17 +1,17 @@
 """
-experiments/benchmark_local_inference.py — ASIR Physical Local Inference Benchmark (TR-9)
+experiments/benchmark_local_inference.py — ASIR Physical Local Inference Benchmark (TR-10)
 
 Evaluates physical autoregressive token decode throughput (decode tok/s), prefill throughput,
-cache hit rates, and NVMe data transfer traffic under RAM/NVMe Expert Residency offloading constraints.
+cache hit rates, exact NVMe data transfer volume (MB/tok), and physical NVMe streaming bandwidth.
 
 Configurations benchmarked:
-  - Config A: 32 experts resident in RAM (100% baseline)
-  - Config B: 16 experts resident in RAM / 16 in NVMe
-  - Config C: 8 experts resident in RAM / 24 in NVMe
-  - Config D: 4 experts resident in RAM / 28 in NVMe
+  - Config A: 100% experts resident in RAM (baseline)
+  - Config B: 50% experts resident in RAM / 50% NVMe
+  - Config C: 25% experts resident in RAM / 75% NVMe
+  - Config D: 12.5% experts resident in RAM / 87.5% NVMe
 
 Usage:
-    python experiments/benchmark_local_inference.py --model M2 --gen_len 30
+    python experiments/benchmark_local_inference.py --model M1 --gen_len 30
 """
 
 import sys
@@ -21,6 +21,7 @@ import argparse
 import time
 import torch
 import numpy as np
+from typing import Tuple, Dict, Any
 
 # Add adaptive-inference directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -42,7 +43,7 @@ def populate_expert_stores(
     """
     Extracts expert parameters from model and registers them into RAM & NVMe stores.
     """
-    ram_store = RAMExpertStore(device=device)
+    ram_store = RAMExpertStore(device=device, pin_memory=True)
     nvme_store = NVMeExpertStore(storage_dir=storage_dir, ram_store=ram_store, nvme_bw_gbps=nvme_bw_gbps)
     
     for l_idx, block in enumerate(model.blocks):
@@ -56,17 +57,17 @@ def populate_expert_stores(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="ASIR Local Inference Benchmark (TR-9)")
-    parser.add_argument("--model", type=str, default="M2", help="Model config (M2, M3, M4, M5, K3-Router).")
+    parser = argparse.ArgumentParser(description="ASIR Physical Local Inference Benchmark (TR-10)")
+    parser.add_argument("--model", type=str, default="M1", help="Model config (M1, M2, M3, M4, M5, K3-Router).")
     parser.add_argument("--prompt", type=str, default="Calculate prime numbers up to 100", help="Test prompt.")
     parser.add_argument("--gen_len", type=int, default=30, help="Number of tokens to generate in decode phase.")
     parser.add_argument("--nvme_bw", type=float, default=5.0, help="PCIe Gen4 NVMe Bandwidth in GB/s.")
     args = parser.parse_args()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print("=" * 85)
-    print("ASIR PHYSICAL LOCAL INFERENCE BENCHMARK (TR-9)")
-    print("=" * 85)
+    print("=" * 95)
+    print("ASIR PHYSICAL LOCAL INFERENCE BENCHMARK (TR-10)")
+    print("=" * 95)
     print(f"Device: {device} | Model: {args.model} | NVMe Bandwidth: {args.nvme_bw} GB/s")
 
     # 1. Initialize Tokenizer & Model
@@ -84,12 +85,18 @@ def main():
         top_k=config['top_k']
     ).to(device)
 
-    # 2. Setup Physical Expert Storage
+    # Check for trained model checkpoint
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    checkpoint_path = os.path.join(script_dir, "..", "checkpoints", args.model, "model.pt")
+    if os.path.exists(checkpoint_path):
+        print(f"Loading checkpoint from: {checkpoint_path}")
+        model.load_state_dict(torch.load(checkpoint_path, map_location=device))
+
+    # 2. Setup Physical Expert Storage
     nvme_dir = os.path.join(script_dir, "..", "results", "TR9", "nvme_store")
     ram_store, nvme_store = populate_expert_stores(model, nvme_dir, device, nvme_bw_gbps=args.nvme_bw)
 
-    # Load transition matrix if available
+    # Load transition matrix if available from TR-8
     locality_file = os.path.join(script_dir, "..", "results", "TR8", "m2_locality_results.json")
     T_matrix = None
     if os.path.exists(locality_file):
@@ -99,7 +106,6 @@ def main():
 
     # 3. Residency Configurations to Benchmark
     num_experts = config['num_experts']
-    # Define resident capacities C: Config A (100%), Config B (50%), Config C (25%), Config D (12.5%)
     residency_configs = [
         ("Config A (100% RAM)", num_experts),
         ("Config B (50% RAM)", max(1, num_experts // 2)),
@@ -110,14 +116,15 @@ def main():
     benchmark_results = {}
 
     print("\nExecuting Local Autoregressive Decode Benchmark...")
-    print("-" * 85)
-    print(f"  {'Configuration':22s} | {'C':3s} | {'Policy':8s} | {'Decode tok/s':13s} | {'Hit Rate':10s} | {'NVMe MB/tok':13s}")
-    print("-" * 85)
+    print("-" * 95)
+    print(f"  {'Configuration':22s} | {'C':3s} | {'Policy':10s} | {'Decode tok/s':13s} | {'Hit Rate':10s} | {'NVMe MB/tok':13s}")
+    print("-" * 95)
 
     for cfg_name, cap_c in residency_configs:
         for policy in ["lru", "lru_prefetch"]:
-            # Reset RAM store and cache
+            # Reset RAM store and nvme stats
             ram_store.store.clear()
+            nvme_store.reset_stats()
             
             cache = ExpertCache(
                 capacity_experts=cap_c * 5,  # capacity across 5 layers
@@ -128,7 +135,7 @@ def main():
             
             engine = InferenceEngine(model, tokenizer, expert_cache=cache, device=device)
             
-            # Execute Warmup & Generation
+            # Execute Generation
             gen_text, summary = engine.generate(args.prompt, max_gen_len=args.gen_len)
             
             decode_tps = summary['decode_tok_per_sec']
@@ -145,9 +152,9 @@ def main():
             }
             
             target_str = " (TARGET HIT)" if decode_tps >= 20.0 else ""
-            print(f"  {cfg_name:22s} | {cap_c:3d} | {policy:8s} | {decode_tps:10.2f} tok/s | {hit_rate:9.2f}% | {nvme_mb_per_tok:11.2f} MB{target_str}")
+            print(f"  {cfg_name:22s} | {cap_c:3d} | {policy:10s} | {decode_tps:10.2f} tok/s | {hit_rate:9.2f}% | {nvme_mb_per_tok:11.2f} MB{target_str}")
             
-    print("-" * 85)
+    print("-" * 95)
 
     # Save Output JSON
     output_dir = os.path.join(script_dir, "..", "results", "TR9")
@@ -162,7 +169,7 @@ def main():
         }, f, indent=2)
 
     print(f"\nBenchmark results saved successfully to: {out_file}")
-    print("=" * 85)
+    print("=" * 95)
 
 
 if __name__ == "__main__":

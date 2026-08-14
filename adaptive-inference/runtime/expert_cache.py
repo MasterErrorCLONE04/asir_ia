@@ -1,5 +1,5 @@
 """
-runtime/expert_cache.py — Dynamic Expert Cache Manager for ASIR
+runtime/expert_cache.py — Dynamic Expert Cache Manager for ASIR (TR-10)
 
 Manages RAM resident capacity C of (layer_id, expert_id) tensor weights.
 Implements Static, LRU, and LRUWithPrefetch eviction policies, seamlessly triggering
@@ -32,7 +32,7 @@ class ExpertCache:
         self.policy = policy.lower()
         self.transition_matrix = transition_matrix
         
-        # Cache queue for LRU: list/deque of (layer_id, expert_id)
+        # Cache queue for LRU: deque of (layer_id, expert_id)
         self.lru_queue: deque = deque()
         self.cache_keys: Set[Tuple[int, int]] = set()
         
@@ -110,6 +110,7 @@ class ExpertCache:
         self.misses = 0
         self.prefetches = 0
         self.evictions = 0
+        self.nvme_store.reset_stats()
 
     def get_stats(self) -> Dict[str, Any]:
         total = max(self.hits + self.misses, 1)
@@ -124,5 +125,7 @@ class ExpertCache:
             'miss_rate_pct': float(100.0 - hit_rate),
             'resident_experts': len(self.cache_keys),
             'capacity': self.capacity,
-            'policy': self.policy
+            'policy': self.policy,
+            'nvme_bytes_read': self.nvme_store.total_bytes_read,
+            'nvme_io_time_ms': float(self.nvme_store.total_read_time_ms)
         }

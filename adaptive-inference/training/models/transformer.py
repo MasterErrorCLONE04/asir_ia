@@ -23,6 +23,7 @@ class MoELayer(nn.Module):
     """
     Mixture-of-Experts layer using top-K routing.
     Supports routing masking for Controlled MoE.
+    Instrumented with sub-stage timing hooks for router, dispatch, experts, and combine.
     """
     def __init__(self, d_model: int, d_ff: int, num_experts: int, top_k: int):
         super().__init__()
@@ -35,68 +36,57 @@ class MoELayer(nn.Module):
         ])
         
         # Router network (projects to expert logits)
-        # We do not use bias for the router to keep parameter count simple and symmetric
         self.router = nn.Linear(d_model, num_experts, bias=False)
 
     def forward(self, x: torch.Tensor, mask: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]:
-        """
-        x: (batch_size, seq_len, d_model)
-        mask: (batch_size, num_experts) - optional mask for controlled routing
-        
-        Returns:
-            output: (batch_size, seq_len, d_model)
-            router_logits: (batch_size, seq_len, num_experts)
-        """
+        from training.profiling.dispatch_timing import get_global_timing_profiler
+        profiler = get_global_timing_profiler()
+
+        # --- Stage 1: Router ---
+        if profiler: profiler.start("router")
         batch_size, seq_len, d_model = x.shape
-        # Flatten tokens: (batch_size * seq_len, d_model)
         flat_x = x.view(-1, d_model)
-        
-        # Compute router logits: (batch_size * seq_len, num_experts)
         router_logits = self.router(flat_x)
         
-        # Apply domain routing mask if provided
         if mask is not None:
-            # Expand mask from (batch_size, num_experts) to (batch_size, seq_len, num_experts)
             expanded_mask = mask.unsqueeze(1).expand(-1, seq_len, -1)
             flat_mask = expanded_mask.reshape(-1, self.num_experts)
-            # Apply large negative bias to masked-out experts
             router_logits = router_logits + (1.0 - flat_mask) * -1e9
+        if profiler: profiler.stop("router")
 
-        # Softmax to get routing gates: (batch_size * seq_len, num_experts)
+        # --- Stage 2: Dispatch ---
+        if profiler: profiler.start("dispatch")
         routing_gates = F.softmax(router_logits, dim=-1)
-        
-        # Select top-K experts
         topk_gates, topk_indices = torch.topk(routing_gates, self.top_k, dim=-1)
-        
-        # Re-normalize gates over top-K selected experts
         topk_gates = topk_gates / (topk_gates.sum(dim=-1, keepdim=True) + 1e-9)
-        
-        # Prepare output container
         flat_out = torch.zeros_like(flat_x)
-        
-        # For efficiency, group tokens by their assigned experts
-        # We loop over the top-K assignments
+        if profiler: profiler.stop("dispatch")
+
+        # --- Stage 3: Experts ---
+        if profiler: profiler.start("experts")
+        computed_outputs = []
         for k in range(self.top_k):
             gates = topk_gates[:, k]
             indices = topk_indices[:, k]
             
-            # Loop over each expert and process its tokens
             for exp_idx in range(self.num_experts):
                 token_mask = (indices == exp_idx)
                 if not token_mask.any():
                     continue
-                
-                # Extract tokens assigned to this expert
                 exp_tokens = flat_x[token_mask]
-                # Process with expert FFN
                 exp_outputs = self.experts[exp_idx](exp_tokens)
-                
-                # Accumulate gated outputs
-                flat_out[token_mask] += gates[token_mask].unsqueeze(-1) * exp_outputs
+                computed_outputs.append((token_mask, gates[token_mask], exp_outputs))
+        if profiler: profiler.stop("experts")
 
-        # Reshape back to sequence format
+        # --- Stage 4: Combine ---
+        if profiler: profiler.start("combine")
+        for token_mask, gates_sub, exp_outputs in computed_outputs:
+            flat_out[token_mask] += gates_sub.unsqueeze(-1) * exp_outputs
+        if profiler: profiler.stop("combine")
+
         output = flat_out.view(batch_size, seq_len, d_model)
         return output, router_logits.view(batch_size, seq_len, -1)
+
 
 
 class MultiHeadAttention(nn.Module):
@@ -150,10 +140,11 @@ class MultiHeadAttention(nn.Module):
 class TransformerBlock(nn.Module):
     """
     A single Transformer decoder layer block.
-    Supports either standard dense FFN or MoE FFN.
+    Supports standard dense FFN, Reference MoE, Sparse MoE, or Batched MoE Dispatcher.
     """
     def __init__(self, d_model: int, num_heads: int, d_ff: int, moe: bool = False,
-                 num_experts: int = 1, top_k: int = 1):
+                 num_experts: int = 1, top_k: int = 1,
+                 use_sparse_dispatcher: bool = False, dispatcher_type: str = "reference"):
         super().__init__()
         self.moe = moe
         self.ln1 = nn.LayerNorm(d_model)
@@ -161,7 +152,19 @@ class TransformerBlock(nn.Module):
         self.ln2 = nn.LayerNorm(d_model)
         
         if moe:
-            self.ffn = MoELayer(d_model, d_ff, num_experts, top_k)
+            # Backward compatibility: use_sparse_dispatcher=True maps to dispatcher_type="sparse"
+            effective_type = dispatcher_type
+            if use_sparse_dispatcher and dispatcher_type == "reference":
+                effective_type = "sparse"
+
+            if effective_type == "batched":
+                from training.moe.batched_dispatcher import BatchedMoEDispatcher
+                self.ffn = BatchedMoEDispatcher(d_model, d_ff, num_experts, top_k)
+            elif effective_type == "sparse":
+                from training.moe.dispatcher import SparseMoEDispatcher
+                self.ffn = SparseMoEDispatcher(d_model, d_ff, num_experts, top_k)
+            else:
+                self.ffn = MoELayer(d_model, d_ff, num_experts, top_k)
         else:
             self.ffn = FFNExpert(d_model, d_ff)
 
@@ -187,10 +190,12 @@ class MoETransformer(nn.Module):
     """
     def __init__(self, vocab_size: int, d_model: int, n_layers: int, num_heads: int,
                  d_ff: int, max_seq_len: int = 512, moe: bool = False,
-                 num_experts: int = 1, top_k: int = 1):
+                 num_experts: int = 1, top_k: int = 1,
+                 use_sparse_dispatcher: bool = False, dispatcher_type: str = "reference"):
         super().__init__()
         self.moe = moe
         self.max_seq_len = max_seq_len
+        self.gradient_checkpointing = False
         
         # Shared embeddings
         self.token_embed = nn.Embedding(vocab_size, d_model)
@@ -199,13 +204,15 @@ class MoETransformer(nn.Module):
         
         # Transformer decoder blocks
         self.blocks = nn.ModuleList([
-            TransformerBlock(d_model, num_heads, d_ff, moe, num_experts, top_k)
+            TransformerBlock(d_model, num_heads, d_ff, moe, num_experts, top_k,
+                             use_sparse_dispatcher=use_sparse_dispatcher, dispatcher_type=dispatcher_type)
             for _ in range(n_layers)
         ])
         
         # Final layers
         self.ln_out = nn.LayerNorm(d_model)
         self.lm_head = nn.Linear(d_model, vocab_size)
+
 
     def forward(self, input_ids: torch.Tensor, mask: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, List[torch.Tensor]]:
         """
@@ -230,7 +237,11 @@ class MoETransformer(nn.Module):
         
         # Process decoder layers
         for block in self.blocks:
-            x, r_logits = block(x, mask)
+            if self.gradient_checkpointing and self.training:
+                from torch.utils.checkpoint import checkpoint
+                x, r_logits = checkpoint(block, x, mask, use_reentrant=False)
+            else:
+                x, r_logits = block(x, mask)
             if r_logits is not None:
                 all_router_logits.append(r_logits)
                 
@@ -239,3 +250,4 @@ class MoETransformer(nn.Module):
         logits = self.lm_head(x)
         
         return logits, all_router_logits
+

@@ -170,6 +170,8 @@ def get_model_config(model_name: str) -> Dict[str, Any]:
         'M3':      {'moe': True,  'num_experts': 128, 'top_k': 4},
         'M4':      {'moe': True,  'num_experts': 512, 'top_k': 8},
         'M5':      {'moe': True,  'num_experts': 896, 'top_k': 8},
+        # Experimental K3-like Router configuration
+        'K3-Router': {'moe': True, 'num_experts': 896, 'top_k': 16},
         # EXP-C (K=2 fixed, N_total varies — §4 EXP-C table)
         'C1':      {'moe': True,  'num_experts': 32,  'top_k': 2},
         'C2':      {'moe': True,  'num_experts': 128, 'top_k': 2},
